@@ -1,11 +1,11 @@
-## Pre-release R API Client
+# Pre-release Data Commons R API Client
 This is a beta library. Support is scheduled to stop on Sept 30.
 The official release is coming soon.
 
-The R API Client facilitates querying the DataCommons.org
+This R API Client facilitates querying the [DataCommons.org](https://datacommons.org)
 Open Knowledge Graph from R.
 
-It supports querying the graph via SPARQL
+It supports querying the graph via [SPARQL](https://en.wikipedia.org/wiki/SPARQL)
 queries to the Data Commons REST API endpoint:
 
 ```
@@ -31,9 +31,13 @@ inLabels <- GetPropertyLabels(sccDcid, outgoing = FALSE)
 
 WiFi is needed for all functions in this package.
 
-### To use this R API Client to access Data Commons REST API
+## User Quickstart
 
-In the R console, run:
+Using the Data Commons API requires you to provision an API key on GCP. Follow 
+[these steps](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key)
+to create your own key.
+
+Now that you have `YOUR-API-KEY`, go to the R console and run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
@@ -42,6 +46,9 @@ devtools::install_github("datacommonsorg/api-r")
 library(datacommons)
 SetApiKey(YOUR-API-KEY)
 ```
+
+**We recommend starting with the [Demo Notebook](demo-notebook.Rmd) for an
+introduction to Data Commons graph, vocabulary, and data model.**
 
 ### Summary of Functions
 
@@ -57,21 +64,21 @@ For more detail, use `help(function)` in the R console, or the shortcut `?functi
 - GetPopulations: get populations of each specified place.
 - GetObservations: get observations on the specified property of each node.
 
-### To develop on this R API Client
+## To develop on this R API Client
 
-#### Clone the Repo
+### Clone the Repo
 
 [Data Commons Github Repo](https://github.com/datacommonsorg/api-r)
 
 [GitHub Cloning Docs](https://help.github.com/en/articles/cloning-a-repository)
 
-#### Load the devtools library
+### Load the devtools library
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
 ```
 
-#### To load/reload the code
+### To load/reload the code
 Keyboard shortcut: `Cmd/Ctrl + Shift + L`
 
 Or in R console, run:
@@ -81,7 +88,7 @@ devtools::load_all()
 SetApiKey(YOUR-API-KEY)
 ```
 
-#### To generate/regenerate the docs
+### To generate/regenerate the docs
 Keyboard shortcut: `Cmd/Ctrl + Shift + D` (if this doesn't work, go to
 `Tools > Project Options > Build Tools`
 and check `Generate documentation with Roxygen`)
@@ -97,7 +104,7 @@ any changes to the docstrings in the R/ folder. Here is an
 [introduction](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html)
 to using roxygen2.
 
-#### To run tests
+### To run tests
 Keyboard shortcut: `Cmd/Ctrl + Shift + T`
 
 Or in R console, run:
@@ -106,7 +113,7 @@ Or in R console, run:
 devtools::test()
 ```
 
-#### Working with Reticulate
+### Working with Reticulate
 
 In `zzz.R`, the Python Client dependency is installed via pip. On many systems,
 this would default to install the Python Client to Python2. You can use pip3 to
