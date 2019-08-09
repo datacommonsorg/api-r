@@ -8,7 +8,7 @@ output:
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. To execute chunks, click the *Run* button within the chunk, or by place your cursor inside it and press *Cmd+Shift+Enter*.
 
-**FEEDBACK REQUEST** thanks for checking out our API demo. After using this, we would greatly appreciate your feedback. You can send an [issue request](https://github.com/google/datacommons/issues) and mark the issue using the **api feedback** label!
+**FEEDBACK REQUEST** thanks for checking out our API demo. After using this, we would greatly appreciate your feedback. You can send an [issue request](https://github.com/datacommonsorg/api-r/issues) and mark the issue using the **feedback** label!
 
 **DISCLAIMER** this notebook uses an experimental version of the Data Commons R API Client. The semantics and availability of this API may be subject to change without prior notice!
 
@@ -29,7 +29,7 @@ Data Commons is an open knowledge graph of structured data. It contains statemen
 
 * [Santa Clara County](https://browser.datacommons.org/kg?dcid=geoId/06085) is contained in the [State of California](https://browser.datacommons.org/kg?dcid=geoId/06)
 * The latitude of [Berkeley, CA](https://browser.datacommons.org/kg?dcid=geoId/0606000) is 37.8703
-* The [population of all persons in Maryland ](https://browser.datacommons.org/kg?dcid=dc/o/6w1c9qk7hxjch)has a total count of 5,996,080.
+* The [population of all persons in Maryland ](https://browser.datacommons.org/kg?dcid=dc/o/6w1c9qk7hxjch) has a total count of 5,996,080.
 
 In the graph, [*entities*](https://en.wikipedia.org/wiki/Entity) like [Santa Clara County](https://browser.datacommons.org/kg?dcid=geoId/06085) are represented by nodes. Every node is uniquely identified by its **`dcid`** (Data Commons Identifier) and has a **`type`** corresponding to what the node represents. For example, [California](https://browser.datacommons.org/kg?dcid=geoId/06) is identified by the dcid `geoId/06` and is of type [State](https://browser.datacommons.org/kg?dcid=State). *Relations* between entities are represented by directed edges between these nodes. For example, the statement "Santa Clara County is contained in the State of California" is represented in the graph as two nodes: "Santa Clara County" and "California" with an edge labeled "[containedInPlace](https://schema.org/containedInPlace)" pointing from Santa Clara to California. This can be visualized by the following diagram.
 
