@@ -12,7 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# util function to set API key
+#' Set your API Key
+#'
+#' Using the Data Commons API requires you to provision an API key on
+#' GCP. See
+#' \url{https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key}
+#'
+#' @param key (string) your API Key.
+#' @export
+#' @examples
+#' # Say you got an API Key: 12345678, in the R console:
+#' SetApiKey("12345678")
 SetApiKey = function(key) {
   # Set API key for Python dependency
   dc$set_api_key(key)
