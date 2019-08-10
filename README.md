@@ -49,6 +49,8 @@ SetApiKey(YOUR-API-KEY)
 
 **We recommend starting with the [Demo Notebook](demo-notebook.Rmd) for an
 introduction to Data Commons graph, vocabulary, and data model.**
+If you did not clone this repo, feel free to download the
+[raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/demo-notebook.Rmd) for running. Please note the license at the top of the raw file.
 
 ### Summary of Functions
 
