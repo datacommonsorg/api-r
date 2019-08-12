@@ -1,6 +1,5 @@
 # Pre-release Data Commons R API Client
-This is a beta library. Support is scheduled to stop on Sept 30.
-The official release is coming soon.
+Thank you for your interest in the Data Commons R API Client. This library is currently in beta mode, but we will release and switch support to an official release soon.
 
 This R API Client facilitates querying the [DataCommons.org](https://datacommons.org)
 Open Knowledge Graph from R.
@@ -33,11 +32,26 @@ WiFi is needed for all functions in this package.
 
 ## User Quickstart
 
+### Getting an API Key
 Using the Data Commons API requires you to provision an API key on GCP. Follow 
 [these steps](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key)
 to create your own key.
 
-Now that you have `YOUR-API-KEY`, go to the R console and run:
+### Installing
+
+#### Downloading the Pre-Built (tar.gz) Library
+
+If you received a tar.gz file from us, go to the command line and run:
+
+```
+R CMD INSTALL <the tar.gz file>
+```
+
+#### Using the R devtools Library
+
+The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
+
+Go to the R console and run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
@@ -47,10 +61,32 @@ library(datacommons)
 SetApiKey(YOUR-API-KEY)
 ```
 
+#### Cloning and Building from GitHub
+
+From the Terminal, run:
+
+```
+git clone https://github.com/datacommonsorg/api-r.git
+```
+
+The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
+
+Then, open up RStudio and create a new project using the cloned api-r directory.
+In the R console, run:
+
+```
+if(!require(devtools)) install.packages("devtools")
+library(devtools)
+# Make sure you're inside the R API Client directory
+devtools::load_all()
+SetApiKey(YOUR-API-KEY)
+```
+
+#### Tutorial
 **We recommend starting with the [Demo Notebook](demo-notebook.Rmd) for an
 introduction to Data Commons graph, vocabulary, and data model.**
 If you did not clone this repo, feel free to download the
-[raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/demo-notebook.Rmd) for running. Please note the license at the top of the raw file.
+[raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/demo-notebook.Rmd) and paste it into a new R Markdown file. If you did clone the repo, simply open up the file and run the chunks or knit the file.
 
 ### Summary of Functions
 
@@ -66,7 +102,7 @@ For more detail, use `help(function)` in the R console, or the shortcut `?functi
 - GetPopulations: get populations of each specified place.
 - GetObservations: get observations on the specified property of each node.
 
-## To develop on this R API Client
+## To develop on this R API Client {dev-install}
 
 ### Clone the Repo
 

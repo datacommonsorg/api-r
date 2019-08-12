@@ -20,7 +20,7 @@ output:
   pdf_document: default
 ---
 
-This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. To execute chunks, click the *Run* button within the chunk, or by place your cursor inside it and press *Cmd+Shift+Enter*.
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. To execute chunks, click the *Run* button within the chunk, or by placing your cursor inside it and press *Cmd+Shift+Enter*.
 
 **FEEDBACK REQUEST** thanks for checking out our API demo. After using this, we would greatly appreciate your feedback. You can send an [issue request](https://github.com/datacommonsorg/api-r/issues) and mark the issue using the **feedback** label!
 
@@ -28,16 +28,20 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 # Using the R API Client to Analyse Statistics in Data Commons
 
-This tutorial introduces the Data Commons open knowledge graph and discusses how to programmtically access its data through the R API Client.
+This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.
 
-Let's load the client.
+Let's load the client. If you already [installed the client](README.md#Installing), you can skip this chunk and just run the next one. 
 
 ```{r}
 if(!require(devtools)) install.packages("devtools", quiet=TRUE)
 library(devtools, quiet=TRUE)
 devtools::install_github("datacommonsorg/api-r", quiet=TRUE)
+```
+
+```{r}
 library(datacommons, quiet=TRUE)
 ```
+
 
 Using the Data Commons API requires you to provision an API key on GCP. Follow these steps to create your own key. To get an API key, follow the instructions [here](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key) to get your API key.
 
