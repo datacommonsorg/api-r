@@ -30,14 +30,16 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.
 
-Let's load the client. If you already [installed the client](README.md#Installing), you can skip this chunk and just run the next one. 
+If you already [installed the client](README.md#Installing), you can skip this chunk and just run the next one. 
 
 ```{r}
+# SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
 if(!require(devtools)) install.packages("devtools", quiet=TRUE)
 library(devtools, quiet=TRUE)
 devtools::install_github("datacommonsorg/api-r", quiet=TRUE)
 ```
 
+Let's load the client.
 ```{r}
 library(datacommons, quiet=TRUE)
 ```

@@ -151,6 +151,14 @@ Or in R console, run:
 devtools::test()
 ```
 
+### To build the library export tar.gz
+
+In the command line, run
+
+```
+R CMD BUILD api-R
+```
+
 ### Working with Reticulate
 
 In `zzz.R`, the Python Client dependency is installed via pip. On many systems,

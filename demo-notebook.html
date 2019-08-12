@@ -383,12 +383,14 @@ summary {
 <div id="using-the-r-api-client-to-analyse-statistics-in-data-commons" class="section level1">
 <h1>Using the R API Client to Analyse Statistics in Data Commons</h1>
 <p>This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.</p>
-<p>Let’s load the client. If you already <a href="README.md#Installing">installed the client</a>, you can skip this chunk and just run the next one.</p>
-<pre class="r"><code>if(!require(devtools)) install.packages(&quot;devtools&quot;, quiet=TRUE)</code></pre>
+<p>If you already <a href="README.md#Installing">installed the client</a>, you can skip this chunk and just run the next one.</p>
+<pre class="r"><code># SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
+if(!require(devtools)) install.packages(&quot;devtools&quot;, quiet=TRUE)</code></pre>
 <pre><code>## Loading required package: devtools</code></pre>
 <pre><code>## Loading required package: usethis</code></pre>
 <pre class="r"><code>library(devtools, quiet=TRUE)
 devtools::install_github(&quot;datacommonsorg/api-r&quot;, quiet=TRUE)</code></pre>
+<p>Let’s load the client.</p>
 <pre class="r"><code>library(datacommons, quiet=TRUE)</code></pre>
 <pre><code>## ── Attaching packages ──────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
