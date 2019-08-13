@@ -67,10 +67,15 @@ GetPropertyLabels <- function(dcids, outgoing = TRUE) {
 #'    returned property values by. NULL by default.
 #' @param limit optional, integer indicating the maximum number of property
 #'   values returned aggregated over all given nodes. 100 by default.
-#' @return Named list or column of property values associated to given dcid(s)
-#'   via the given property and direction.
-#'   Will be encapsulated in a named list if dcids input is vector of strings,
-#'   or a new single column tibble if dcids input is tibble/data frame.
+#' @return
+#' If dcids input is vector of strings, will return a named list mapping each
+#' dcid to its property values via the given property and direction.
+#'
+#' If dcids input is tibble/data frame, will return a new single-column
+#' tibble/data frame where the i-th entry corresponds to property values
+#' associated with the i-th given dcid. The cells of output column will
+#' always contain a vector of property values.
+
 #' @export
 #' @examples
 #' # Set the dcid to be that of Santa Clara County.
@@ -97,14 +102,16 @@ GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
 
 #' Return all triples involving specified nodes
 #'
-#' Returns all triples (subject-predicate-object) where the specified node is
-#' either a subject or an object.
+#' A knowledge graph can be described as a collection of "triples" which are
+#' 3-tuples that take the form (s, p, o). Here, s and o are nodes in the graph
+#' called the subject and object respectively while p is the property label
+#' of a directed edge from s to o (sometimes also called the predicate).
 #'
 #' @param dcids required, vector of string(s) of dcids to get triples for.
 #' @param limit optional, integer indicating the max number of triples to
 #'   return. 100 by default.
-#' @return Map between each dcid and a list of all triples where the dcid is
-#'   the subject or object.
+#' @return Named list mapping dcids to a list of triples (s, p, o) where s, p,
+#' and o are strings and either the subject or object is the mapped dcid.
 #' @export
 #' @examples
 #' # Set the dcid to be that of Santa Clara County.

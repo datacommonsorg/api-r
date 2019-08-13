@@ -30,13 +30,12 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.
 
-If you already [installed the client](README.md#Installing), you can skip this chunk and just run the next one. 
-
+If you already [installed the client](https://github.com/datacommonsorg/api-r/blob/master/README.md#installing), you can skip this chunk and just run the next one. If you still need to install the client, make sure you have the dependencies listed in the [devtools guide](https://www.rstudio.com/products/rpackages/devtools/), then uncomment and run the following chunk.
 ```{r}
-# SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
-if(!require(devtools)) install.packages("devtools", quiet=TRUE)
-library(devtools, quiet=TRUE)
-devtools::install_github("datacommonsorg/api-r", quiet=TRUE)
+## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
+# if(!require(devtools)) install.packages("devtools", quiet=TRUE)
+# library(devtools, quiet=TRUE)
+# devtools::install_github("datacommonsorg/api-r", quiet=TRUE)
 ```
 
 Let's load the client.
@@ -47,7 +46,7 @@ library(datacommons, quiet=TRUE)
 
 Using the Data Commons API requires you to provision an API key on GCP. Follow these steps to create your own key. To get an API key, follow the instructions [here](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key) to get your API key.
 
-Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then, uncomment and run the following block.
+Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then run the following block.
 
 ```{r}
 REPLACE_WITH_YOUR_API_KEY = Sys.getenv("API_KEY")
@@ -89,7 +88,14 @@ The [Bureau of Labor Statistics](https://www.bls.gov) provides a monthly count f
 - `GetPopulations`
 - `GetObservations`
 
-operate when using a tibble, as well as how statistical observations are modeled within the Data Commons graph. To begin, we will initialize a tibble with the dcid associated with California: [geoId/06](https://browser.datacommons.org/kg?dcid=geoId/06).
+operate when using a tibble, as well as how statistical observations are modeled within the Data Commons graph. To see a full list of functions from the Data Commons R API Client, you can use R's `ls` function:
+
+```{r}
+ls(pos = "package:datacommons")
+```
+
+
+To begin, we will initialize a tibble with the dcid associated with California: [geoId/06](https://browser.datacommons.org/kg?dcid=geoId/06).
 
 ```{r}
 # Initialize the tibble
@@ -103,11 +109,10 @@ data
 
 For all properties, one can use **`GetPropertyValues`** to get the associated values. We would like to know that the dcid we have in our data frame belongs to California by getting the name of the node identified by "geoId/06".
 
-To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in help function:
+To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in `help` function or its `?` shortcut:
 ```{r}
 ?GetPropertyValues
 ```
-The R doc includes the function description, usage, arguments, return value, and examples.
 
 `GetPropertyValues` accepts the following parameters.
 
@@ -154,7 +159,7 @@ data$county = GetPlacesIn(select(data, state), 'County')
 data
 ```
 
-Notice that both `state_name` and `county` columns are columns with list. `unnest` will automaticall flatten all columns that have lists in their cells.
+Notice that both `state_name` and `county` are columns with lists. `unnest` will automaticall flatten all columns that have lists in their cells.
 
 ```{r}
 # Call flatten frame
@@ -205,7 +210,7 @@ To query for `StatisticalPopulation`s using the Data Commons R API Client, we ca
 
 - **`dcids`** - A list or Pandas Series of dcids denoting the locations of populations to query for.
 - **`populationType`** - The `populationType` of the `StatisticalPopulation`
-- **`constraintsPVMap`**`` - An optional map from constraining property to the value that the `StatisticalPopulation` should be constrained by.
+- **`constraintsPVMap`** - An optional map from constraining property to the value that the `StatisticalPopulation` should be constrained by.
 
 When a column is provided to `dcids`, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of `dcids`, `populationType`, and optionally `constraintsPVMap` always map to a unique statistical population `dcid` if it exists.
 
@@ -300,10 +305,23 @@ g
 This wraps up our tutorial on how to use the Data Commons R API Client to access statistics in the knowledge graph and view it in a tibble. From this tutorial we should now know
 
 - How statistics are modeled in the graph
-- What API methods are available for accessing these statistics
+- What Node API methods are available for accessing these statistics
+  - `GetPropertyValues`
+  - `GetPlacesIn`
+  - `GetPopulations`
+  - `GetObservations`
 - How to use API methods to access these statistics
 
-Of course, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as
+We did not cover 2 Node API methods:
+
+- GetTriples: get all triples (subject-predicate-object) where the specified node is
+  either a subject or an object.
+  
+- GetPropertyLabels: get property labels of each specified node.
+
+Remember that you can learn more about these functions, or any function, using the R `help(function)` command or the `?function` shortcut. To see a list of all functions in a package, use the R `ls(pos = "package:datacommons")` command.
+
+Lastly, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as
 
 - All persons in a county.
 - All persons of working age in a county.

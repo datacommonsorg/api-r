@@ -42,15 +42,17 @@
 #'   to the desired values that defines the returned StatisticalPopulations
 #'   should be constrained by. Example:
 #'   \code{list(employment = 'BLS_Employed')}
-#' @return dcid strings of populations corresponding to each given Place
-#'   satisfying the constraints.
-#'   If dcids input is a vector of strings, will be encapsulated in a named
-#'   list mapping Place dcids to their unique StatisticalPopulation IF
-#'   it has a satisfying population.
-#'   If dcids input is a tibble/data frame, will be encapsulated in a new single
-#'   column tibble, where the i-th entry corresponds to population located at
-#'   the given dcid specified by the population_type and constraining_properties
-#'   if such exists. Otherwise, the cell is empty.
+#' @return If dcids input is a vector of strings, returns a named
+#'   list mapping a given dcid to the unique StatisticalPopulation
+#'   located at the dcid as specified by the populationType and
+#'   constrainingProperties, if such a StatisticalPopulation exists.
+#'   A given dcid will NOT be a member of the dict if such a
+#'   StatisticalPopulation does not exist.
+#'
+#'   If dcids input is a tibble/data frame, returns a new single column
+#'   tibble, where the i-th entry corresponds to the StatisticalPopulation
+#'   located at the given dcid specified by the populationType and
+#'   constrainingProperties, if such exists. Otherwise, the cell is empty.
 #' @export
 #' @examples
 #' # Set the dcid to be that of Santa Clara County.
@@ -105,6 +107,18 @@ GetPopulations <- function(dcids, populationType, constraintsPVMap) {
 #' @return Observation values corresponding to each given dcid.
 #'   Will be encapsulated in a named list if dcids input is vector of strings
 #'   or a new single column tibble if dcids input is tibble/data frame.
+#'
+#'   If dcids input is a vector of strings, returns a named
+#'   list mapping a given dcid to the unique Observation
+#'   observing the dcid, where the observation is specified by what is given
+#'   in the other parameters.
+#'   A given dcid will NOT be a member of the dict if such an observation
+#'   does not exist.
+#'
+#'   If dcids input is a tibble/data frame, returns a new single column
+#'   tibble, where the i-th entry corresponds to the Observation
+#'   observing the given dcid as specified by the other parameters, if
+#'   such exists. Otherwise, the cell is empty.
 #' @export
 #' @examples
 #' stateDcids <- c('geoId/06', 'geoId/21', 'geoId/24')

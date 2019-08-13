@@ -24,15 +24,17 @@ should be constrained by. Example:
 \code{list(employment = 'BLS_Employed')}}
 }
 \value{
-dcid strings of populations corresponding to each given Place
-  satisfying the constraints.
-  If dcids input is a vector of strings, will be encapsulated in a named
-  list mapping Place dcids to their unique StatisticalPopulation IF
-  it has a satisfying population.
-  If dcids input is a tibble/data frame, will be encapsulated in a new single
-  column tibble, where the i-th entry corresponds to population located at
-  the given dcid specified by the population_type and constraining_properties
-  if such exists. Otherwise, the cell is empty.
+If dcids input is a vector of strings, returns a named
+  list mapping a given dcid to the unique StatisticalPopulation
+  located at the dcid as specified by the populationType and
+  constrainingProperties, if such a StatisticalPopulation exists.
+  A given dcid will NOT be a member of the dict if such a
+  StatisticalPopulation does not exist.
+
+  If dcids input is a tibble/data frame, returns a new single column
+  tibble, where the i-th entry corresponds to the StatisticalPopulation
+  located at the given dcid specified by the populationType and
+  constrainingProperties, if such exists. Otherwise, the cell is empty.
 }
 \description{
 Returns a mapping between the each given Place and the

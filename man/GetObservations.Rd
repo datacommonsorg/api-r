@@ -36,6 +36,18 @@ measurement method.}
 Observation values corresponding to each given dcid.
   Will be encapsulated in a named list if dcids input is vector of strings
   or a new single column tibble if dcids input is tibble/data frame.
+
+  If dcids input is a vector of strings, returns a named
+  list mapping a given dcid to the unique Observation
+  observing the dcid, where the observation is specified by what is given
+  in the other parameters.
+  A given dcid will NOT be a member of the dict if such an observation
+  does not exist.
+
+  If dcids input is a tibble/data frame, returns a new single column
+  tibble, where the i-th entry corresponds to the Observation
+  observing the given dcid as specified by the other parameters, if
+  such exists. Otherwise, the cell is empty.
 }
 \description{
 Returns a mapping between each given dcid

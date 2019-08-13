@@ -12,15 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# Data Commons Query API
+#
+# Query
+#
+# This function provides R access to
+#   Data Commons Query API function.
+#   www.DataCommons.org
+
 #' Query Data Commons Using SPARQL
 #'
 #' This function allows you to build R dataframes using data from
 #' the Data Commons Open Knowledge Graph via SPARQL queries to
-#' the Query API.
-#' www.DataCommons.org
+#' the Data Commons Query API.
 #'
 #' @param queryString required, SPARQL query string.
-#' @return A populated data frame with columns specified with SPARQL.
+#' @return A populated data frame with columns specified by the SPARQL query.
 #' @export
 #' @examples
 #' queryString = "SELECT ?pop ?Unemployment

@@ -13,12 +13,14 @@ GetTriples(dcids, limit = 100)
 return. 100 by default.}
 }
 \value{
-Map between each dcid and a list of all triples where the dcid is
-  the subject or object.
+Named list mapping dcids to a list of triples (s, p, o) where s, p,
+and o are strings and either the subject or object is the mapped dcid.
 }
 \description{
-Returns all triples (subject-predicate-object) where the specified node is
-either a subject or an object.
+A knowledge graph can be described as a collection of "triples" which are
+3-tuples that take the form (s, p, o). Here, s and o are nodes in the graph
+called the subject and object respectively while p is the property label
+of a directed edge from s to o (sometimes also called the predicate).
 }
 \examples{
 # Set the dcid to be that of Santa Clara County.

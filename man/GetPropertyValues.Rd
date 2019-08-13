@@ -24,10 +24,13 @@ returned property values by. NULL by default.}
 values returned aggregated over all given nodes. 100 by default.}
 }
 \value{
-Named list or column of property values associated to given dcid(s)
-  via the given property and direction.
-  Will be encapsulated in a named list if dcids input is vector of strings,
-  or a new single column tibble if dcids input is tibble/data frame.
+If dcids input is vector of strings, will return a named list mapping each
+dcid to its property values via the given property and direction.
+
+If dcids input is tibble/data frame, will return a new single-column
+tibble/data frame where the i-th entry corresponds to property values
+associated with the i-th given dcid. The cells of output column will
+always contain a vector of property values.
 }
 \description{
 Returns all neighboring nodes of each specified node via the specified

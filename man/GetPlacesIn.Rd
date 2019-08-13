@@ -16,10 +16,14 @@ To select a single column, use \code{select(df, col)}.}
 by.}
 }
 \value{
-Named list or column of places contained in each given dcid of the
-  given placeType. If dcids input is vector of strings, will return a named
-  list. If dcids input is tibble/data frame, will return a new single-column
-  tibble/data frame.
+If dcids input is vector of strings, will return a named
+  list mapping each dcid to places contained in it of the given placeType.
+
+  If \code{dcids} input is tibble/data frame, will return a new
+  single-column tibble/data frame where the i-th entry of the output
+  corresponds to places contained in the place identified by the dcid in
+  i-th cell of the \code{dcids} input. The cells of output column will
+  always contain a vector of place dcids of the given placeType.
 }
 \description{
 Returns a mapping between the specified places

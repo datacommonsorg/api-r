@@ -10,13 +10,12 @@ Query(queryString)
 \item{queryString}{required, SPARQL query string.}
 }
 \value{
-A populated data frame with columns specified with SPARQL.
+A populated data frame with columns specified by the SPARQL query.
 }
 \description{
 This function allows you to build R dataframes using data from
 the Data Commons Open Knowledge Graph via SPARQL queries to
-the Query API.
-www.DataCommons.org
+the Data Commons Query API.
 }
 \examples{
 queryString = "SELECT ?pop ?Unemployment

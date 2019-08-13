@@ -383,21 +383,19 @@ summary {
 <div id="using-the-r-api-client-to-analyse-statistics-in-data-commons" class="section level1">
 <h1>Using the R API Client to Analyse Statistics in Data Commons</h1>
 <p>This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.</p>
-<p>If you already <a href="README.md#Installing">installed the client</a>, you can skip this chunk and just run the next one.</p>
-<pre class="r"><code># SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
-if(!require(devtools)) install.packages(&quot;devtools&quot;, quiet=TRUE)</code></pre>
-<pre><code>## Loading required package: devtools</code></pre>
-<pre><code>## Loading required package: usethis</code></pre>
-<pre class="r"><code>library(devtools, quiet=TRUE)
-devtools::install_github(&quot;datacommonsorg/api-r&quot;, quiet=TRUE)</code></pre>
+<p>If you already <a href="https://github.com/datacommonsorg/api-r/blob/master/README.md#installing">installed the client</a>, you can skip this chunk and just run the next one. If you still need to install the client, make sure you have the dependencies listed in the <a href="https://www.rstudio.com/products/rpackages/devtools/">devtools guide</a>, then uncomment and run the following chunk.</p>
+<pre class="r"><code>## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
+# if(!require(devtools)) install.packages(&quot;devtools&quot;, quiet=TRUE)
+# library(devtools, quiet=TRUE)
+# devtools::install_github(&quot;datacommonsorg/api-r&quot;, quiet=TRUE)</code></pre>
 <p>Let’s load the client.</p>
 <pre class="r"><code>library(datacommons, quiet=TRUE)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## 
@@ -406,7 +404,7 @@ devtools::install_github(&quot;datacommonsorg/api-r&quot;, quiet=TRUE)</code></p
 ## 
 ##     flatten</code></pre>
 <p>Using the Data Commons API requires you to provision an API key on GCP. Follow these steps to create your own key. To get an API key, follow the instructions <a href="https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key">here</a> to get your API key.</p>
-<p>Replace <code>Sys.getenv(&quot;API_KEY&quot;)</code> with your API key, such as “123456”. Then, uncomment and run the following block.</p>
+<p>Replace <code>Sys.getenv(&quot;API_KEY&quot;)</code> with your API key, such as “123456”. Then run the following block.</p>
 <pre class="r"><code>REPLACE_WITH_YOUR_API_KEY = Sys.getenv(&quot;API_KEY&quot;)
 
 SetApiKey(REPLACE_WITH_YOUR_API_KEY)</code></pre>
@@ -443,7 +441,12 @@ SetApiKey(REPLACE_WITH_YOUR_API_KEY)</code></pre>
 <li><code>GetPopulations</code></li>
 <li><code>GetObservations</code></li>
 </ul>
-<p>operate when using a tibble, as well as how statistical observations are modeled within the Data Commons graph. To begin, we will initialize a tibble with the dcid associated with California: <a href="https://browser.datacommons.org/kg?dcid=geoId/06">geoId/06</a>.</p>
+<p>operate when using a tibble, as well as how statistical observations are modeled within the Data Commons graph. To see a full list of functions from the Data Commons R API Client, you can use R’s <code>ls</code> function:</p>
+<pre class="r"><code>ls(pos = &quot;package:datacommons&quot;)</code></pre>
+<pre><code>## [1] &quot;GetObservations&quot;   &quot;GetPlacesIn&quot;       &quot;GetPopulations&quot;   
+## [4] &quot;GetPropertyLabels&quot; &quot;GetPropertyValues&quot; &quot;GetTriples&quot;       
+## [7] &quot;Query&quot;             &quot;SetApiKey&quot;</code></pre>
+<p>To begin, we will initialize a tibble with the dcid associated with California: <a href="https://browser.datacommons.org/kg?dcid=geoId/06">geoId/06</a>.</p>
 <pre class="r"><code># Initialize the tibble
 data = tibble('state' = 'geoId/06')
 
@@ -456,9 +459,8 @@ data</code></pre>
 <div id="accessing-properties-of-a-node" class="section level3">
 <h3>Accessing Properties of a Node</h3>
 <p>For all properties, one can use <strong><code>GetPropertyValues</code></strong> to get the associated values. We would like to know that the dcid we have in our data frame belongs to California by getting the name of the node identified by “geoId/06”.</p>
-<p>To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in help function:</p>
+<p>To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in <code>help</code> function or its <code>?</code> shortcut:</p>
 <pre class="r"><code>?GetPropertyValues</code></pre>
-<p>The R doc includes the function description, usage, arguments, return value, and examples.</p>
 <p><code>GetPropertyValues</code> accepts the following parameters.</p>
 <ul>
 <li><strong><code>dcids</code></strong> - A vector OR single-column tibble/data frame of string(s) that identify node(s) to get property values for.</li>
@@ -505,7 +507,7 @@ data</code></pre>
 ##   state    state_name county      
 ##   &lt;chr&gt;    &lt;chr&gt;      &lt;named list&gt;
 ## 1 geoId/06 California &lt;chr [58]&gt;</code></pre>
-<p>Notice that both <code>state_name</code> and <code>county</code> columns are columns with list. <code>unnest</code> will automaticall flatten all columns that have lists in their cells.</p>
+<p>Notice that both <code>state_name</code> and <code>county</code> are columns with lists. <code>unnest</code> will automaticall flatten all columns that have lists in their cells.</p>
 <pre class="r"><code># Call flatten frame
 data = unnest(data)
 
@@ -575,7 +577,7 @@ data</code></pre>
 <ul>
 <li><strong><code>dcids</code></strong> - A list or Pandas Series of dcids denoting the locations of populations to query for.</li>
 <li><strong><code>populationType</code></strong> - The <code>populationType</code> of the <code>StatisticalPopulation</code></li>
-<li><strong><code>constraintsPVMap</code></strong>`<code>- An optional map from constraining property to the value that the</code>StatisticalPopulation` should be constrained by.</li>
+<li><strong><code>constraintsPVMap</code></strong> - An optional map from constraining property to the value that the <code>StatisticalPopulation</code> should be constrained by.</li>
 </ul>
 <p>When a column is provided to <code>dcids</code>, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of <code>dcids</code>, <code>populationType</code>, and optionally <code>constraintsPVMap</code> always map to a unique statistical population <code>dcid</code> if it exists.</p>
 <p>Let’s call <code>GetPopulations</code> to get the populations of all employed individuals living in counties specified by the <code>county</code> column of our tibble.</p>
@@ -678,10 +680,22 @@ g</code></pre>
 <p>This wraps up our tutorial on how to use the Data Commons R API Client to access statistics in the knowledge graph and view it in a tibble. From this tutorial we should now know</p>
 <ul>
 <li>How statistics are modeled in the graph</li>
-<li>What API methods are available for accessing these statistics</li>
+<li>What Node API methods are available for accessing these statistics
+<ul>
+<li><code>GetPropertyValues</code></li>
+<li><code>GetPlacesIn</code></li>
+<li><code>GetPopulations</code></li>
+<li><code>GetObservations</code></li>
+</ul></li>
 <li>How to use API methods to access these statistics</li>
 </ul>
-<p>Of course, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as</p>
+<p>We did not cover 2 Node API methods:</p>
+<ul>
+<li><p>GetTriples: get all triples (subject-predicate-object) where the specified node is either a subject or an object.</p></li>
+<li><p>GetPropertyLabels: get property labels of each specified node.</p></li>
+</ul>
+<p>Remember that you can learn more about these functions, or any function, using the R <code>help(function)</code> command or the <code>?function</code> shortcut. To see a list of all functions in a package, use the R <code>ls(pos = &quot;package:datacommons&quot;)</code> command.</p>
+<p>Lastly, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as</p>
 <ul>
 <li>All persons in a county.</li>
 <li>All persons of working age in a county.</li>
