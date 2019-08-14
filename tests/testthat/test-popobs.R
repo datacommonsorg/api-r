@@ -34,21 +34,43 @@ test_that("GetPopulations gets populations", {
   expect_match(malePops[[1]], "dc/p/.*")
 
   # INPUT tibble of the dcids of California, Kentucky, and Maryland; and random column.
-  df <- tibble(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'), rand = c(1, 2, 3))
+  df <- tibble(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'),
+               rand = c(1, 2, 3))
   # Get the population dcids for each state.
-  femalePopsTibble <- GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Female'))
-  malePopsTibble <- GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Male'))
+  femalePopsTibble <- GetPopulations(select(df, countyDcid), 'Person',
+                                     list(gender = 'Female'))
+  malePopsTibble <- GetPopulations(select(df, countyDcid), 'Person',
+                                   list(gender = 'Male'))
   expect_setequal(femalePopsTibble, femalePops)
   expect_setequal(malePopsTibble, malePops)
 
   # INPUT data frame
-  df <- data.frame(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'), rand = c(1, 2, 3))
-  # Using df$col as input to GetPopulations will cause problems for data frames.
+  df <- data.frame(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'),
+                   rand = c(1, 2, 3))
+  # Using df$col as input to GetPopulations will error for data frames.
   # While it will work for tibbles, we encourage using select(df, col).
-  expect_error(GetPopulations(df$countyDcid, 'Person', list(gender = 'Female')))
+  expect_error(GetPopulations(df$countyDcid, 'Person',
+                              list(gender = 'Female')))
   # Correct way to select column
-  expect_setequal(GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Female')), as.array(unlist(femalePopsTibble)))
-  expect_setequal(GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Male')), as.array(unlist(malePopsTibble)))
+  expect_setequal(GetPopulations(select(df, countyDcid), 'Person',
+                                 list(gender = 'Female')),
+                  as.array(unlist(femalePopsTibble)))
+  expect_setequal(GetPopulations(select(df, countyDcid), 'Person',
+                                 list(gender = 'Male')),
+                  as.array(unlist(malePopsTibble)))
+})
+
+
+test_that("GetPopulations fails without API key", {
+  skip_if_no_dcpy()
+
+  stateDcids <- c('geoId/06', 'geoId/21', 'geoId/24')
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetPopulations(stateDcids, 'Person', list(gender = 'Female')),
+               ".*SetApiKey function and try again.*")
+  SetApiKey(tmp)
 })
 
 test_that("GetObservations gets data", {
@@ -71,23 +93,45 @@ test_that("GetObservations gets data", {
   expect_equal(length(malePops[[1]]), 1)
   expect_match(malePops[[1]], "dc/p/.*")
 
-  femaleCount <- GetObservations(unlist(femalePops), 'count', 'measured_value', '2016', measurementMethod = 'CenusACS5yrSurvey')
-  maleCount <- GetObservations(unlist(malePops), 'count', 'measured_value', '2016', measurementMethod = 'CenusACS5yrSurvey')
+  femaleCount <- GetObservations(unlist(femalePops), 'count', 'measured_value',
+                                 '2016', measurementMethod = 'CenusACS5yrSurvey')
+  maleCount <- GetObservations(unlist(malePops), 'count', 'measured_value',
+                               '2016', measurementMethod = 'CenusACS5yrSurvey')
 
   expect_gt(as.numeric(femaleCount), 500000)
   expect_gt(as.numeric(maleCount), 500000)
 
-  # INPUT tibble of the dcids of California, Kentucky, and Maryland; and random column.
-  df <- tibble(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'), rand = c(1, 2, 3))
+  # INPUT tibble with the dcids of California, Kentucky, and Maryland.
+  df <- tibble(countyDcid = c('geoId/06', 'geoId/21', 'geoId/24'),
+               rand = c(1, 2, 3))
   # Get the population dcids for each state.
-  df$femalePops <- GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Female'))
-  df$malePops <- GetPopulations(select(df, countyDcid), 'Person', list(gender = 'Male'))
+  df$femalePops <- GetPopulations(select(df, countyDcid), 'Person',
+                                  list(gender = 'Female'))
+  df$malePops <- GetPopulations(select(df, countyDcid), 'Person',
+                                list(gender = 'Male'))
   df = unnest(df)
   # Get observations
-  df$femaleCount <- GetObservations(select(df,femalePops), 'count', 'measured_value', '2016', measurementMethod = 'CenusACS5yrSurvey')
-  df$maleCount <- GetObservations(select(df,malePops), 'count', 'measured_value', '2016', measurementMethod = 'CenusACS5yrSurvey')
+  df$femaleCount <- GetObservations(select(df,femalePops), 'count',
+                                    'measured_value', '2016',
+                                    measurementMethod = 'CenusACS5yrSurvey')
+  df$maleCount <- GetObservations(select(df,malePops), 'count',
+                                  'measured_value', '2016',
+                                  measurementMethod = 'CenusACS5yrSurvey')
 
   expect_gt(as.numeric(df$femaleCount[2]), 2000000)
   expect_gt(as.numeric(df$maleCount[2]), 2000000)
 })
 
+
+test_that("GetObservations fails without API key", {
+  skip_if_no_dcpy()
+
+  femalePops <- GetPopulations('geoId/06085', 'Person', list(gender = 'Female'))
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetObservations(unlist(femalePops), 'count', 'measured_value',
+                               '2016', measurementMethod = 'CenusACS5yrSurvey'),
+               ".*SetApiKey function and try again.*")
+  SetApiKey(tmp)
+})

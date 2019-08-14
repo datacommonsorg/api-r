@@ -30,12 +30,22 @@ SetApiKey = function(key) {
   Sys.setenv(API_KEY = key)
 }
 
-# helper function to ensure that dcids input is either
-# a single element list or
-# a multi-element vector
-# to make sure Reticulate converts the input to a Python list
+#' Unset your API Key
+#'
+#' @export
+#' @examples
+#' UnsetApiKey()
+UnsetApiKey = function() {
+  # Set API key for Python dependency to psuedo key
+  dc$set_api_key("foo")
+  # Remove API key variable in R environment
+  Sys.unsetenv("API_KEY")
+}
+
+# Helper function to ensure that R dcids input will be converted to
+# list or series for python dcids input
 # https://rstudio.github.io/reticulate/articles/calling_python.html#type-conversions
-ConvertibleToPythonList = function(input) {
+ConvertibleToPython = function(input) {
   if (is.null(input) || length(input) < 1) {
     stop("input cannot be empty")
   }
@@ -72,6 +82,32 @@ ConvertibleToPythonList = function(input) {
   }
 
   return(input)
+}
+
+# Helper function to call Python and convert error messages
+CallPython <- function(func, args) {
+  tryCatch(
+    expr = {
+      return(do.call(func, args))
+    },
+    error = function(err) {
+      message(paste("Error calling Python function: ", func))
+      if (str_detect(conditionMessage(err),
+                     'Must set an API key before using the API')) {
+        # Rewrite the error message to refer to R wrapper funtion
+        err$message <- "Must set an API key before using the API. Set your API key
+             with the SetApiKey function and try again. See the SetApiKey help
+             docs for instructions on obtaining and setting an API key."
+      } else if (str_detect(conditionMessage(err),
+                            'API key not valid. Please pass a valid API key.')) {
+        # Rewrite the error message to refer to R wrapper funtion
+        err$message <- "API key not valid. Please pass a valid API key to the
+              SetApiKey function and try again. See the SetApiKey help docs for
+              instructions on obtaining and setting an API key."
+      }
+      stop(err)
+    }
+  )
 }
 
 # testthat helper function to skip tests if we don't have the 'datacommons' python module

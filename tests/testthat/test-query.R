@@ -54,3 +54,17 @@ test_that("query returns large dataframe", {
   expect_true(4.7 %in% df$`?Unemployment`)
 })
 
+test_that("Query fails when API key is wiped", {
+  keyCopy = Sys.getenv("API_KEY")
+  Sys.unsetenv("API_KEY")
+  califQuery1 <- "SELECT  ?name
+    WHERE {
+     ?a typeOf Place .
+     ?a name ?name .
+     ?a dcid \"geoId/06\"
+    }
+    "
+  expect_error(Query(califQuery1)[[1]],
+               ".*Please use API Key.*")
+  Sys.setenv("API_KEY" = keyCopy)
+})

@@ -41,6 +41,16 @@ test_that("GetPropertyLabels returns incoming and outgoing labels", {
   expect_gt(length(unlist(outLabels)), 15)
 })
 
+test_that("GetPropertyLabels fails without API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetPropertyLabels(list('geoId/06085'), outgoing = FALSE),
+               ".*SetApiKey function and try again.*")
+  SetApiKey(tmp)
+})
+
 test_that("GetPropertyValues returns incoming and outgoing edges", {
   skip_if_no_dcpy()
 
@@ -77,6 +87,16 @@ test_that("GetPropertyValues returns incoming and outgoing edges", {
   expect_setequal(df$cityDcid, cityDcids)
 })
 
+test_that("GetPropertyValues fails without API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetPropertyValues(list('geoId/06085'), 'landArea'),
+               ".*SetApiKey function and try again.*")
+  SetApiKey(tmp)
+})
+
 test_that("GetTriples returns triples involving given dcid(s)", {
   skip_if_no_dcpy()
 
@@ -98,4 +118,14 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   expect_equal(length(triples2[[2]][[1]]), 3)
   expect_equal(length(triples2[[2]][[23]]), 3)
   expect_equal(length(triples2[[2]][[80]]), 3)
+})
+
+test_that("GetTriples fails without API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetTriples(list('geoId/06085'), limit=100),
+               ".*SetApiKey function and try again.*")
+  SetApiKey(tmp)
 })

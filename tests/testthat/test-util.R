@@ -14,6 +14,24 @@
 
 context("Data Commons API - R Client Utils")
 
+test_that("Setting and unsetting API keys work correctly", {
+
+  expect_gt(length(GetPropertyLabels("Class")[[1]]), 3)
+
+  tmp <- Sys.getenv("API_KEY")
+  UnsetApiKey()
+  expect_error(GetPropertyLabels("Class"))
+
+  SetApiKey(tmp)
+  expect_gt(length(GetPropertyLabels("Class")[[1]]), 3)
+
+  SetApiKey("foohahaha")
+  expect_error(GetPropertyLabels("Class"))
+
+  SetApiKey(tmp)
+  expect_gt(length(GetPropertyLabels("Class")[[1]]), 3)
+})
+
 test_that("ConvertibleToPython works correctly", {
   # OK Case 1: single element unnamed list: no conversion
   expect_identical(ConvertibleToPython(list("W Apollo")), list("W Apollo"))
@@ -65,3 +83,11 @@ test_that("ConvertibleToPython works correctly", {
   expect_error(ConvertibleToPython(list("0"="lose", "o"="oh")))
 })
 
+test_that("skip_if_no_dcpy works correctly", {
+  ## Waiting on https://github.com/rstudio/reticulate/issues/580
+  # system("pip uninstall datacommons --yes")
+  # expect_error(skip_if_no_dcpy(), ".*python client not available for testing.*")
+
+  system("pip install --upgrade --user --quiet git+https://github.com/datacommonsorg/api-python.git@v1.0.0")
+  expect_output(skip_if_no_dcpy(), "datacommons:.*/datacommons")
+})
