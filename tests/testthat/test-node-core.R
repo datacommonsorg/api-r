@@ -45,9 +45,9 @@ test_that("GetPropertyLabels fails without API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("invalidkey")
   expect_error(GetPropertyLabels(list('geoId/06085'), outgoing = FALSE),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code.*")
   SetApiKey(tmp)
 })
 
@@ -91,9 +91,9 @@ test_that("GetPropertyValues fails without API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("fakekey")
   expect_error(GetPropertyValues(list('geoId/06085'), 'landArea'),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code.*")
   SetApiKey(tmp)
 })
 
@@ -124,8 +124,8 @@ test_that("GetTriples fails without API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("invalidkey")
   expect_error(GetTriples(list('geoId/06085'), limit=100),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code*")
   SetApiKey(tmp)
 })

@@ -65,6 +65,21 @@ test_that("Query fails when API key is wiped", {
     }
     "
   expect_error(Query(califQuery1)[[1]],
-               ".*Please use API Key.*")
+               ".*Response error: An HTTP 401 code.*")
+  Sys.setenv("API_KEY" = keyCopy)
+})
+
+test_that("Query fails when API key is invalid", {
+  keyCopy = Sys.getenv("API_KEY")
+  Sys.setenv(API_KEY = "fakekey")
+  califQuery1 <- "SELECT  ?name
+    WHERE {
+     ?a typeOf Place .
+     ?a name ?name .
+     ?a dcid \"geoId/06\"
+    }
+    "
+  expect_error(Query(califQuery1)[[1]],
+               ".*Response error: An HTTP 400 code.*")
   Sys.setenv("API_KEY" = keyCopy)
 })

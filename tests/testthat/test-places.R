@@ -36,9 +36,9 @@ test_that("GetPlaces fails without API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("fooo")
   expect_error(GetPlacesIn(c('geoId/06085', 'geoId/24031'), 'Town'),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code.*")
   SetApiKey(tmp)
 })
 

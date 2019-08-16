@@ -51,18 +51,20 @@ Query <- function(queryString) {
   }
 
   # Parse response
-  parsedResp <- jsonlite::fromJSON(content(resp, "text"),
+  parsedResp <- fromJSON(content(resp, "text"),
                                    simplifyVector = FALSE)
   if (http_error(resp)) {
-    if (str_detect(parsedResp$message, 'Method doesn\'t allow unregistered
-                   callers.*Please use API Key')) {
-      parsedResp$message <- "Must set an API key before using the API. Set your
-        API key with the SetApiKey function and try again. See the SetApiKey
-        help docs for instructions on obtaining and setting an API key."
+    if (status_code(resp) == 401) {
+      parsedResp$message <- "API key not set. See the SetApiKey help docs for
+        instructions on obtaining and setting an API key, then try again."
+    }
+    if (status_code(resp) == 400) {
+      parsedResp$message <- "API key not valid. Please pass a valid API key. See the SetApiKey
+        help docs for instructions on obtaining and setting an API key, then try again."
     }
     stop(
       sprintf(
-        "Data Commons API request failed [%s]\n%s",
+        "Data Commons API request failed. Response error: An HTTP %s code.\n%s",
         status_code(resp),
         parsedResp$message
       ),

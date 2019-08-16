@@ -67,9 +67,9 @@ test_that("GetPopulations fails without API key", {
   stateDcids <- c('geoId/06', 'geoId/21', 'geoId/24')
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("fakekey")
   expect_error(GetPopulations(stateDcids, 'Person', list(gender = 'Female')),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code.*")
   SetApiKey(tmp)
 })
 
@@ -129,9 +129,9 @@ test_that("GetObservations fails without API key", {
   femalePops <- GetPopulations('geoId/06085', 'Person', list(gender = 'Female'))
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("pseudokey")
   expect_error(GetObservations(unlist(femalePops), 'count', 'measured_value',
                                '2016', measurementMethod = 'CenusACS5yrSurvey'),
-               ".*SetApiKey function and try again.*")
+               ".*Response error: An HTTP 400 code.*")
   SetApiKey(tmp)
 })

@@ -19,7 +19,7 @@ test_that("Setting and unsetting API keys work correctly", {
   expect_gt(length(GetPropertyLabels("Class")[[1]]), 3)
 
   tmp <- Sys.getenv("API_KEY")
-  UnsetApiKey()
+  SetApiKey("1234567")
   expect_error(GetPropertyLabels("Class"))
 
   SetApiKey(tmp)

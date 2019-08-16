@@ -30,18 +30,6 @@ SetApiKey = function(key) {
   Sys.setenv(API_KEY = key)
 }
 
-#' Unset your API Key
-#'
-#' @export
-#' @examples
-#' UnsetApiKey()
-UnsetApiKey = function() {
-  # Set API key for Python dependency to psuedo key
-  dc$set_api_key("foo")
-  # Remove API key variable in R environment
-  Sys.unsetenv("API_KEY")
-}
-
 # Helper function to ensure that R dcids input will be converted to
 # list or series for python dcids input
 # https://rstudio.github.io/reticulate/articles/calling_python.html#type-conversions
@@ -76,7 +64,7 @@ ConvertibleToPython = function(input) {
     stop("input must be string, vector of strings, or list of 1 string")
   }
 
-  # cast single string to list, otherwise Reticulate will not allow conversion to py list
+  # cast single string to list, else Reticulate will not convert to py list
   if (length(input) == 1) {
     return(list(input))
   }
@@ -93,24 +81,24 @@ CallPython <- function(func, args) {
     error = function(err) {
       message(paste("Error calling Python function: ", func))
       if (str_detect(conditionMessage(err),
-                     'Must set an API key before using the API')) {
+                     'HTTP 401')) {
         # Rewrite the error message to refer to R wrapper funtion
-        err$message <- "Must set an API key before using the API. Set your API key
-             with the SetApiKey function and try again. See the SetApiKey help
-             docs for instructions on obtaining and setting an API key."
+        err$message <- "Response error: An HTTP 401 code: API key not set.
+          See the SetApiKey help docs for instructions on obtaining and setting
+          an API key, then try again."
       } else if (str_detect(conditionMessage(err),
-                            'API key not valid. Please pass a valid API key.')) {
+                            'HTTP 400')) {
         # Rewrite the error message to refer to R wrapper funtion
-        err$message <- "API key not valid. Please pass a valid API key to the
-              SetApiKey function and try again. See the SetApiKey help docs for
-              instructions on obtaining and setting an API key."
+        err$message <- "Response error: An HTTP 400 code: API key not valid.
+          Please pass a valid API key. See the SetApiKey help docs for
+          instructions on obtaining and setting an API key, then try again."
       }
-      stop(err)
+      stop(err, call. = FALSE)
     }
   )
 }
 
-# testthat helper function to skip tests if we don't have the 'datacommons' python module
+# testthat helper function to skip tests if no 'datacommons' python module
 # helpful for CRAN machines that might not have datacommons
 skip_if_no_dcpy <- function() {
   have_dcpy <- py_module_available("datacommons")
