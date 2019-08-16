@@ -41,7 +41,7 @@ test_that("GetPropertyLabels returns incoming and outgoing labels", {
   expect_gt(length(unlist(outLabels)), 15)
 })
 
-test_that("GetPropertyLabels fails without API key", {
+test_that("GetPropertyLabels fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
@@ -87,7 +87,7 @@ test_that("GetPropertyValues returns incoming and outgoing edges", {
   expect_setequal(df$cityDcid, cityDcids)
 })
 
-test_that("GetPropertyValues fails without API key", {
+test_that("GetPropertyValues fails with fake API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
@@ -120,7 +120,7 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   expect_equal(length(triples2[[2]][[80]]), 3)
 })
 
-test_that("GetTriples fails without API key", {
+test_that("GetTriples fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")

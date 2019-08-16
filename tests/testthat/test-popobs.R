@@ -61,7 +61,7 @@ test_that("GetPopulations gets populations", {
 })
 
 
-test_that("GetPopulations fails without API key", {
+test_that("GetPopulations fails with fake API key", {
   skip_if_no_dcpy()
 
   stateDcids <- c('geoId/06', 'geoId/21', 'geoId/24')
@@ -123,7 +123,7 @@ test_that("GetObservations gets data", {
 })
 
 
-test_that("GetObservations fails without API key", {
+test_that("GetObservations fails with fake API key", {
   skip_if_no_dcpy()
 
   femalePops <- GetPopulations('geoId/06085', 'Person', list(gender = 'Female'))

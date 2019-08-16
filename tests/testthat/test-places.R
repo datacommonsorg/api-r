@@ -32,7 +32,7 @@ test_that("GetPlaces gets correct containment data", {
   expect_match(towns[['geoId/24031']][5], "geoId/24.*")
 })
 
-test_that("GetPlaces fails without API key", {
+test_that("GetPlaces fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")

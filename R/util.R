@@ -26,7 +26,8 @@
 SetApiKey = function(key) {
   # Set API key for Python dependency
   dc$set_api_key(key)
-  # Set API key in R environment
+  # Set API key in R environment for Query func
+  # Temporary, until Python client implements Query func
   Sys.setenv(API_KEY = key)
 }
 
