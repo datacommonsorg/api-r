@@ -104,7 +104,7 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   triples <- GetTriples(sccDcid, limit=100)
 
   expect_equal(length(triples), 1)
-  expect_lte(length(triples[[1]]), 100)
+  expect_gte(length(triples[[1]]), 100)
   expect_equal(length(triples[[1]][[1]]), 3)
   expect_equal(length(triples[[1]][[23]]), 3)
   expect_equal(length(triples[[1]][[80]]), 3)
@@ -114,7 +114,7 @@ test_that("GetTriples returns triples involving given dcid(s)", {
 
   expect_equal(length(triples2), 2)
   expect_equal(length(triples2[[1]]), length(triples[[1]]))
-  expect_lte(length(triples2[[2]]), 100)
+  expect_gte(length(triples2[[2]]), 100)
   expect_equal(length(triples2[[2]][[1]]), 3)
   expect_equal(length(triples2[[2]][[23]]), 3)
   expect_equal(length(triples2[[2]][[80]]), 3)
