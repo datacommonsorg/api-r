@@ -109,7 +109,7 @@ GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
 #'
 #' @param dcids required, vector of string(s) of dcids to get triples for.
 #' @param limit optional, integer indicating the max number of triples to
-#'   return. 100 by default.
+#'   return PER predicate, direction, and neighbor type. 100 by default.
 #' @return Named list mapping dcids to a list of triples (s, p, o) where s, p,
 #' and o are strings and either the subject or object is the mapped dcid.
 #' @export

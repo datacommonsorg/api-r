@@ -10,7 +10,7 @@ GetTriples(dcids, limit = 100)
 \item{dcids}{required, vector of string(s) of dcids to get triples for.}
 
 \item{limit}{optional, integer indicating the max number of triples to
-return. 100 by default.}
+return PER predicate, direction, and neighbor type. 100 by default.}
 }
 \value{
 Named list mapping dcids to a list of triples (s, p, o) where s, p,
