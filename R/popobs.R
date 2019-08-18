@@ -76,8 +76,8 @@
 #' df$femalePops <- GetPopulations(select(df, countyDcid), 'Person',
 #'                                 list(gender = 'Female'))
 GetPopulations <- function(dcids, populationType, constraintsPVMap) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_populations(dcids, populationType, constraintsPVMap))
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_populations, list(dcids, populationType, constraintsPVMap)))
 }
 
 #' Return dcids of Observations observing the given dcids
@@ -141,8 +141,8 @@ GetPopulations <- function(dcids, populationType, constraintsPVMap) {
 GetObservations <- function(dcids, measuredProperty, statsType,
                             observationDate, observationPeriod = NULL,
                             measurementMethod = NULL) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_observations(dcids, measuredProperty, statsType,
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_observations, list(dcids, measuredProperty, statsType,
                              observationDate, observationPeriod,
-                             measurementMethod))
+                             measurementMethod)))
 }

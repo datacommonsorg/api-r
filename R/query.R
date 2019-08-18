@@ -43,18 +43,28 @@
 Query <- function(queryString) {
   # Encode the query to REST URL
   urlEncodedQuery <- URLencode(queryString, reserved = TRUE)
-  reqUrl <- paste0("http://api.datacommons.org/query?sparql=", URLencode(urlEncodedQuery), "&key=", Sys.getenv("API_KEY"))
+  reqUrl <- paste0("http://api.datacommons.org/query?sparql=",
+                   URLencode(urlEncodedQuery), "&key=", Sys.getenv("API_KEY"))
   resp <- GET(reqUrl)
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)
   }
 
   # Parse response
-  parsedResp <- jsonlite::fromJSON(content(resp, "text"), simplifyVector = FALSE)
+  parsedResp <- fromJSON(content(resp, "text"),
+                                   simplifyVector = FALSE)
   if (http_error(resp)) {
+    if (status_code(resp) == 401) {
+      parsedResp$message <- "API key not set. See the SetApiKey help docs for
+        instructions on obtaining and setting an API key, then try again."
+    }
+    if (status_code(resp) == 400) {
+      parsedResp$message <- "API key not valid. Please pass a valid API key. See the SetApiKey
+        help docs for instructions on obtaining and setting an API key, then try again."
+    }
     stop(
       sprintf(
-        "Data Commons API request failed [%s]\n%s",
+        "Data Commons API request failed. Response error: An HTTP %s code.\n%s",
         status_code(resp),
         parsedResp$message
       ),
@@ -78,7 +88,8 @@ Query <- function(queryString) {
 
     KVList = vector("list", numCols)
     for (attr in 1:numCols) {
-      KVList[[attr]] = paste0("\"", columns[attr], "\"", ":", "\"", rowKVs[attr][[1]]$value, "\"")
+      KVList[[attr]] = paste0("\"", columns[attr], "\"", ":", "\"",
+                              rowKVs[attr][[1]]$value, "\"")
     }
     KVText = paste(KVList, collapse=",")
     # Write JSON object

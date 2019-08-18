@@ -118,7 +118,7 @@ introduction to Data Commons graph, vocabulary, and data model.**
 If you did not clone this repo, feel free to download the
 [raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/demo-notebook.Rmd) and paste it into a new R Markdown file. If you did clone the repo, simply open up the file and run the chunks or knit the file.
 
-## To develop on this R API Client {dev-install}
+## To develop on this R API Client {#dev-install}
 
 ### Clone the Repo
 
@@ -159,7 +159,11 @@ any changes to the docstrings in the R/ folder. Here is an
 to using roxygen2.
 
 ### To run tests
-Keyboard shortcut: `Cmd/Ctrl + Shift + T`
+1. Make sure you've set your API Key with `SetApiKey("YOUR_API_KEY")`.
+
+2. Run the test suite:
+
+With keyboard shortcut: `Cmd/Ctrl + Shift + T`
 
 Or in R console, run:
 ```

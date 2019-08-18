@@ -26,16 +26,15 @@
 SetApiKey = function(key) {
   # Set API key for Python dependency
   dc$set_api_key(key)
-  # Set API key in R environment
+  # Set API key in R environment for Query func
+  # Temporary, until Python client implements Query func
   Sys.setenv(API_KEY = key)
 }
 
-# helper function to ensure that dcids input is either
-# a single element list or
-# a multi-element vector
-# to make sure Reticulate converts the input to a Python list
+# Helper function to ensure that R dcids input will be converted to
+# list or series for python dcids input
 # https://rstudio.github.io/reticulate/articles/calling_python.html#type-conversions
-ConvertibleToPythonList = function(input) {
+ConvertibleToPython = function(input) {
   if (is.null(input) || length(input) < 1) {
     stop("input cannot be empty")
   }
@@ -66,7 +65,7 @@ ConvertibleToPythonList = function(input) {
     stop("input must be string, vector of strings, or list of 1 string")
   }
 
-  # cast single string to list, otherwise Reticulate will not allow conversion to py list
+  # cast single string to list, else Reticulate will not convert to py list
   if (length(input) == 1) {
     return(list(input))
   }
@@ -74,7 +73,33 @@ ConvertibleToPythonList = function(input) {
   return(input)
 }
 
-# testthat helper function to skip tests if we don't have the 'datacommons' python module
+# Helper function to call Python and convert error messages
+CallPython <- function(func, args) {
+  tryCatch(
+    expr = {
+      return(do.call(func, args))
+    },
+    error = function(err) {
+      message(paste("Error calling Python function: ", func))
+      if (str_detect(conditionMessage(err),
+                     'HTTP 401')) {
+        # Rewrite the error message to refer to R wrapper funtion
+        err$message <- "Response error: An HTTP 401 code: API key not set.
+          See the SetApiKey help docs for instructions on obtaining and setting
+          an API key, then try again."
+      } else if (str_detect(conditionMessage(err),
+                            'HTTP 400')) {
+        # Rewrite the error message to refer to R wrapper funtion
+        err$message <- "Response error: An HTTP 400 code: API key not valid.
+          Please pass a valid API key. See the SetApiKey help docs for
+          instructions on obtaining and setting an API key, then try again."
+      }
+      stop(err, call. = FALSE)
+    }
+  )
+}
+
+# testthat helper function to skip tests if no 'datacommons' python module
 # helpful for CRAN machines that might not have datacommons
 skip_if_no_dcpy <- function() {
   have_dcpy <- py_module_available("datacommons")

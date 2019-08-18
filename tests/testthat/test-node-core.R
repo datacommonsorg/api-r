@@ -41,6 +41,16 @@ test_that("GetPropertyLabels returns incoming and outgoing labels", {
   expect_gt(length(unlist(outLabels)), 15)
 })
 
+test_that("GetPropertyLabels fails with invalid API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  SetApiKey("invalidkey")
+  expect_error(GetPropertyLabels(list('geoId/06085'), outgoing = FALSE),
+               ".*Response error: An HTTP 400 code.*")
+  SetApiKey(tmp)
+})
+
 test_that("GetPropertyValues returns incoming and outgoing edges", {
   skip_if_no_dcpy()
 
@@ -77,6 +87,16 @@ test_that("GetPropertyValues returns incoming and outgoing edges", {
   expect_setequal(df$cityDcid, cityDcids)
 })
 
+test_that("GetPropertyValues fails with fake API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  SetApiKey("fakekey")
+  expect_error(GetPropertyValues(list('geoId/06085'), 'landArea'),
+               ".*Response error: An HTTP 400 code.*")
+  SetApiKey(tmp)
+})
+
 test_that("GetTriples returns triples involving given dcid(s)", {
   skip_if_no_dcpy()
 
@@ -84,7 +104,7 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   triples <- GetTriples(sccDcid, limit=100)
 
   expect_equal(length(triples), 1)
-  expect_lte(length(triples[[1]]), 100)
+  expect_gte(length(triples[[1]]), 100)
   expect_equal(length(triples[[1]][[1]]), 3)
   expect_equal(length(triples[[1]][[23]]), 3)
   expect_equal(length(triples[[1]][[80]]), 3)
@@ -94,8 +114,18 @@ test_that("GetTriples returns triples involving given dcid(s)", {
 
   expect_equal(length(triples2), 2)
   expect_equal(length(triples2[[1]]), length(triples[[1]]))
-  expect_lte(length(triples2[[2]]), 100)
+  expect_gte(length(triples2[[2]]), 100)
   expect_equal(length(triples2[[2]][[1]]), 3)
   expect_equal(length(triples2[[2]][[23]]), 3)
   expect_equal(length(triples2[[2]][[80]]), 3)
+})
+
+test_that("GetTriples fails with invalid API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  SetApiKey("invalidkey")
+  expect_error(GetTriples(list('geoId/06085'), limit=100),
+               ".*Response error: An HTTP 400 code*")
+  SetApiKey(tmp)
 })

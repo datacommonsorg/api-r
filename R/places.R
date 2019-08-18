@@ -60,6 +60,6 @@
 #' # a list of towns, use you can use tidyr::unnest to create
 #' # a 1-1 mapping between each county and its towns.
 GetPlacesIn <- function(dcids, placeType) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_places_in(dcids, placeType))
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_places_in, list(dcids, placeType)))
 }
