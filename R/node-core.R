@@ -47,8 +47,8 @@
 #' inLabels <- GetPropertyLabels(dcids, outgoing = FALSE)
 #' outLabels <- GetPropertyLabels(dcids)
 GetPropertyLabels <- function(dcids, outgoing = TRUE) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_property_labels(dcids, outgoing))
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_property_labels, list(dcids, outgoing)))
 }
 
 #' Return property values along a property for one or more nodes
@@ -96,8 +96,8 @@ GetPropertyLabels <- function(dcids, outgoing = TRUE) {
 #'                                  outgoing = FALSE, valueType = 'City')
 GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
                               limit = 100) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_property_values(dcids, prop, outgoing, valueType, limit))
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_property_values, list(dcids, prop, outgoing, valueType, limit)))
 }
 
 #' Return all triples involving specified nodes
@@ -126,6 +126,6 @@ GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
 #' # Get triples.
 #' triples <- GetPropertyLabels(dcids)
 GetTriples <- function(dcids, limit = 100) {
-  dcids = ConvertibleToPythonList(dcids)
-  return(dc$get_triples(dcids, limit))
+  dcids = ConvertibleToPython(dcids)
+  return(CallPython(dc$get_triples, list(dcids, limit)))
 }

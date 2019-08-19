@@ -32,6 +32,16 @@ test_that("GetPlaces gets correct containment data", {
   expect_match(towns[['geoId/24031']][5], "geoId/24.*")
 })
 
+test_that("GetPlaces fails with invalid API key", {
+  skip_if_no_dcpy()
+
+  tmp <- Sys.getenv("API_KEY")
+  SetApiKey("fooo")
+  expect_error(GetPlacesIn(c('geoId/06085', 'geoId/24031'), 'Town'),
+               ".*Response error: An HTTP 400 code.*")
+  SetApiKey(tmp)
+})
+
 test_that("GetPlaces works with tibble/data frame input", {
   skip_if_no_dcpy()
   # INPUT tibble of the dcids of Santa Clara and Montgomery County.
