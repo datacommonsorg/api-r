@@ -110,7 +110,7 @@ Lastly, in the R console, run:
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
-# Make sure you're inside the R API Client directory
+# Make sure you're inside the api-r/datacommons directory
 devtools::load_all()
 SetApiKey("YOUR-API-KEY")
 ```
@@ -121,7 +121,7 @@ introduction to Data Commons graph, vocabulary, and data model.**
 If you did not clone this repo, feel free to download the
 [raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/notebooks/demo-notebook.Rmd) and paste it into a new R Markdown file. If you did clone the repo, simply open up the file and run the chunks or knit the file.
 
-We have also provided knitted HTML and PDF files for you to view without any interaction.
+We have also provided knitted [HTML](https://github.com/datacommonsorg/api-r/blob/master/notebooks/demo-notebook.html) and [PDF](https://github.com/datacommonsorg/api-r/blob/master/notebooks/demo-notebook.pdf) files for you to view without any interaction.
 
 ## To develop on this R API Client {#dev-install}
 
@@ -138,7 +138,7 @@ Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datac
 
 ### Load the devtools library
 
-First, make sure you're inside the R API Client directory.
+First, make sure you're inside the api-r/datacommons directory.
 
 In the R console:
 
@@ -149,7 +149,7 @@ library(devtools)
 
 ### To load/reload the code
 
-First, make sure you're inside the R API Client directory.
+First, make sure you're inside the api-r/datacommons directory.
 
 Keyboard shortcut: `Cmd/Ctrl + Shift + L`
 
@@ -161,7 +161,7 @@ SetApiKey("YOUR-API-KEY")
 
 ### To generate/regenerate the docs
 
-First, make sure you're inside the R API Client directory.
+First, make sure you're inside the api-r/datacommons directory.
 
 Keyboard shortcut: `Cmd/Ctrl + Shift + D` (if this doesn't work, go to
 `Tools > Project Options > Build Tools`
@@ -180,7 +180,7 @@ to using roxygen2.
 ### To run tests
 1. Make sure you've set your API Key with `SetApiKey("YOUR-API-KEY")`.
 
-1. Make sure you're inside the R API Client directory.
+1. Make sure you're inside the api-r/datacommons directory.
 
 1. Run the test suite:
 
