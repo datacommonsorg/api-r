@@ -74,7 +74,7 @@ R CMD INSTALL <the tar.gz file>
 3. Return to the R console to load in the client and set the API key so you can get started:
 ```
 library(datacommons)
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Using the R devtools Library
@@ -88,7 +88,7 @@ if(!require(devtools)) install.packages("devtools")
 library(devtools)
 devtools::install_github("datacommonsorg/api-r")
 library(datacommons)
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Cloning and Building from GitHub
@@ -101,15 +101,16 @@ git clone https://github.com/datacommonsorg/api-r.git
 
 The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
 
-Then, open up RStudio and create a new project using the cloned api-r directory.
-In the R console, run:
+Then, in RStudio, click "File > Open Project..." and select the `datacommons` directory within the cloned `api-r` directory. Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datacommons` directory.
+
+Lastly, in the R console, run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
 # Make sure you're inside the R API Client directory
 devtools::load_all()
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Tutorial
@@ -139,7 +140,7 @@ Or in R console, run:
 ```
 # Make sure you're inside the R API Client directory
 devtools::load_all()
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 ### To generate/regenerate the docs
@@ -159,7 +160,7 @@ any changes to the docstrings in the R/ folder. Here is an
 to using roxygen2.
 
 ### To run tests
-1. Make sure you've set your API Key with `SetApiKey("YOUR_API_KEY")`.
+1. Make sure you've set your API Key with `SetApiKey("YOUR-API-KEY")`.
 
 2. Run the test suite:
 
@@ -176,7 +177,7 @@ devtools::test()
 In the command line, run
 
 ```
-R CMD BUILD api-R
+R CMD BUILD datacommons
 ```
 
 ### Working with Reticulate
