@@ -23,19 +23,19 @@ df = Query(queryString)
 
 Calls to the Data Commons Node API endpoint are facilitated by functions:
 
-- GetTriples: get all triples (subject-predicate-object) where the specified node is
+- `GetTriples`: get all triples (subject-predicate-object) where the specified node is
   either a subject or an object.
   
-- GetPropertyValues: get values neighboring each specified node via the specified
+- `GetPropertyValues`: get values neighboring each specified node via the specified
   property and direction.
   
-- GetPropertyLabels: get property labels of each specified node.
+- `GetPropertyLabels`: get property labels of each specified node.
 
-- GetPlacesIn: get places of a specified type contained in each specified place.
+- `GetPlacesIn`: get places of a specified type contained in each specified place.
 
-- GetPopulations: get populations of each specified place.
+- `GetPopulations`: get populations of each specified place.
 
-- GetObservations: get observations on the specified property of each node.
+- `GetObservations`: get observations on the specified property of each node.
 
 For example:
 ```
@@ -138,7 +138,7 @@ Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datac
 
 ### Load the devtools library
 
-First, make sure you're inside the api-r/datacommons directory.
+First, make sure you're inside the `api-r/datacommons` directory.
 
 In the R console:
 
@@ -149,7 +149,7 @@ library(devtools)
 
 ### To load/reload the code
 
-First, make sure you're inside the api-r/datacommons directory.
+First, make sure you're inside the `api-r/datacommons` directory.
 
 Keyboard shortcut: `Cmd/Ctrl + Shift + L`
 
@@ -161,7 +161,7 @@ SetApiKey("YOUR-API-KEY")
 
 ### To generate/regenerate the docs
 
-First, make sure you're inside the api-r/datacommons directory.
+First, make sure you're inside the `api-r/datacommons` directory.
 
 Keyboard shortcut: `Cmd/Ctrl + Shift + D` (if this doesn't work, go to
 `Tools > Project Options > Build Tools`
@@ -180,7 +180,7 @@ to using roxygen2.
 ### To run tests
 1. Make sure you've set your API Key with `SetApiKey("YOUR-API-KEY")`.
 
-1. Make sure you're inside the api-r/datacommons directory.
+1. Make sure you're inside the `api-r/datacommons` directory.
 
 1. Run the test suite:
 
