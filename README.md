@@ -83,22 +83,28 @@ SetApiKey("YOUR-API-KEY")
 
 The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
 
-Go to the R console and run:
+To see what tags are available, you can run `git tag`. We will also keep tag information updated in [CHANGELOG.md](CHANGELOG.md).
+
+Go to the R console, replace `<TAG>` with your tag, and run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
-devtools::install_github("datacommonsorg/api-r", subdir="datacommons")
+devtools::install_github("datacommonsorg/api-r@<TAG>", subdir="datacommons")
 library(datacommons)
 SetApiKey("YOUR-API-KEY")
 ```
 
 #### Cloning and Building from GitHub
 
-From the Terminal, run:
+To see what tags are available, you can run `git tag`. We will also keep tag information updated in [CHANGELOG.md](CHANGELOG.md).
+
+Replace `<TAG>` with your desired TAG, then go to the Terminal, run:
 
 ```
 git clone https://github.com/datacommonsorg/api-r.git
+cd api-r
+git checkout <TAG>
 ```
 
 The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
@@ -125,11 +131,17 @@ We have also provided knitted [HTML](https://github.com/datacommonsorg/api-r/blo
 
 ## To develop on this R API Client {#dev-install}
 
-### Clone the Repo
+Data Commons uses the master branch as our development branch.
+The suggested development process is to
 
-[Data Commons Github Repo](https://github.com/datacommonsorg/api-r)
+1. [fork](https://help.github.com/en/articles/fork-a-repo) this [repo](https://github.com/datacommonsorg/api-r),
+1. [clone](https://help.github.com/en/articles/cloning-a-repository) your own fork,
+1. create a [branch](https://help.github.com/en/articles/about-branches) in your fork,
+1. make changes on the branch, and submit a [pull request (PR)](https://help.github.com/en/articles/creating-a-pull-request).
 
-[GitHub Cloning Docs](https://help.github.com/en/articles/cloning-a-repository)
+To keep your fork updated, we suggest taking a look at [this guide](https://help.github.com/en/articles/syncing-a-fork).
+
+## Making Changes
 
 ### Open the R Project
 
@@ -138,7 +150,7 @@ Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datac
 
 ### Load the devtools library
 
-First, make sure you're inside the `api-r/datacommons` directory.
+First, make sure you are inside the `api-r/datacommons` directory.
 
 In the R console:
 
