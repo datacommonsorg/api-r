@@ -1,4 +1,5 @@
 # Pre-release Data Commons R API Client
+
 Thank you for your interest in the Data Commons R API Client. This library is currently in beta mode. We will release and switch support to an official release soon.
 
 This R API Client facilitates querying the [DataCommons.org](https://datacommons.org)
@@ -22,19 +23,19 @@ df = Query(queryString)
 
 Calls to the Data Commons Node API endpoint are facilitated by functions:
 
-- GetTriples: get all triples (subject-predicate-object) where the specified node is
+- `GetTriples`: get all triples (subject-predicate-object) where the specified node is
   either a subject or an object.
   
-- GetPropertyValues: get values neighboring each specified node via the specified
+- `GetPropertyValues`: get values neighboring each specified node via the specified
   property and direction.
   
-- GetPropertyLabels: get property labels of each specified node.
+- `GetPropertyLabels`: get property labels of each specified node.
 
-- GetPlacesIn: get places of a specified type contained in each specified place.
+- `GetPlacesIn`: get places of a specified type contained in each specified place.
 
-- GetPopulations: get populations of each specified place.
+- `GetPopulations`: get populations of each specified place.
 
-- GetObservations: get observations on the specified property of each node.
+- `GetObservations`: get observations on the specified property of each node.
 
 For example:
 ```
@@ -50,6 +51,7 @@ WiFi is needed for all functions in this package. For more detail on usage of an
 ## User Quickstart
 
 ### Getting an API Key
+
 Using the Data Commons API requires you to provision an API key on GCP. Follow 
 [these steps](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key)
 to create your own key.
@@ -74,82 +76,111 @@ R CMD INSTALL <the tar.gz file>
 3. Return to the R console to load in the client and set the API key so you can get started:
 ```
 library(datacommons)
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Using the R devtools Library
 
 The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
 
-Go to the R console and run:
+To see what tags are available, you can run `git tag`. We will also keep tag information updated in [CHANGELOG.md](CHANGELOG.md).
+
+Go to the R console, replace `<TAG>` with your tag, and run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
-devtools::install_github("datacommonsorg/api-r")
+devtools::install_github("datacommonsorg/api-r@<TAG>", subdir="datacommons")
 library(datacommons)
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Cloning and Building from GitHub
 
-From the Terminal, run:
+To see what tags are available, you can run `git tag`. We will also keep tag information updated in [CHANGELOG.md](CHANGELOG.md).
+
+Replace `<TAG>` with your desired TAG, then go to the Terminal, run:
 
 ```
 git clone https://github.com/datacommonsorg/api-r.git
+cd api-r
+git checkout <TAG>
 ```
 
 The devtools library requires some development tools (for Windows: Rtools, for Mac: Xcode command line tools, for Linux: R development package). If you have not already installed them, follow [the devtools guide](https://www.rstudio.com/products/rpackages/devtools/).
 
-Then, open up RStudio and create a new project using the cloned api-r directory.
-In the R console, run:
+Then, in RStudio, click "File > Open Project..." and select the `datacommons` directory within the cloned `api-r` directory. Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datacommons` directory.
+
+Lastly, in the R console, run:
 
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
-# Make sure you're inside the R API Client directory
+# Make sure you're inside the api-r/datacommons directory
 devtools::load_all()
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 #### Tutorial
-**We recommend starting with the [Demo Notebook](demo-notebook.Rmd) for an
+**We recommend starting with the [Demo Notebook](notebooks/demo-notebook.Rmd) for an
 introduction to Data Commons graph, vocabulary, and data model.**
 If you did not clone this repo, feel free to download the
-[raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/demo-notebook.Rmd) and paste it into a new R Markdown file. If you did clone the repo, simply open up the file and run the chunks or knit the file.
+[raw Rmd file](https://raw.githubusercontent.com/datacommonsorg/api-r/master/notebooks/demo-notebook.Rmd) and paste it into a new R Markdown file. If you did clone the repo, simply open up the file and run the chunks or knit the file.
+
+We have also provided knitted [HTML](https://github.com/datacommonsorg/api-r/blob/master/notebooks/demo-notebook.html) and [PDF](https://github.com/datacommonsorg/api-r/blob/master/notebooks/demo-notebook.pdf) files for you to view without any interaction.
 
 ## To develop on this R API Client {#dev-install}
 
-### Clone the Repo
+Data Commons uses the master branch as our development branch.
+The suggested development process is to
 
-[Data Commons Github Repo](https://github.com/datacommonsorg/api-r)
+1. [fork](https://help.github.com/en/articles/fork-a-repo) this [repo](https://github.com/datacommonsorg/api-r),
+1. [clone](https://help.github.com/en/articles/cloning-a-repository) your own fork,
+1. create a [branch](https://help.github.com/en/articles/about-branches) in your fork,
+1. make changes on the branch, and submit a [pull request (PR)](https://help.github.com/en/articles/creating-a-pull-request).
 
-[GitHub Cloning Docs](https://help.github.com/en/articles/cloning-a-repository)
+To keep your fork updated, we suggest taking a look at [this guide](https://help.github.com/en/articles/syncing-a-fork).
+
+## Making Changes
+
+### Open the R Project
+
+In RStudio, click "File > Open Project..." and select the `datacommons` directory within the cloned `api-r`           directory.
+Alternatively, you can double click the `RClient.Rproj` file in the `api-r/datacommons` directory.
 
 ### Load the devtools library
+
+First, make sure you are inside the `api-r/datacommons` directory.
+
+In the R console:
+
 ```
 if(!require(devtools)) install.packages("devtools")
 library(devtools)
 ```
 
 ### To load/reload the code
+
+First, make sure you're inside the `api-r/datacommons` directory.
+
 Keyboard shortcut: `Cmd/Ctrl + Shift + L`
 
 Or in R console, run:
 ```
-# Make sure you're inside the R API Client directory
 devtools::load_all()
-SetApiKey(YOUR-API-KEY)
+SetApiKey("YOUR-API-KEY")
 ```
 
 ### To generate/regenerate the docs
+
+First, make sure you're inside the `api-r/datacommons` directory.
+
 Keyboard shortcut: `Cmd/Ctrl + Shift + D` (if this doesn't work, go to
 `Tools > Project Options > Build Tools`
 and check `Generate documentation with Roxygen`)
 
 Or in R console, run:
 ```
-# Make sure you're inside the R API Client directory
 devtools::document()
 ```
 
@@ -159,24 +190,25 @@ any changes to the docstrings in the R/ folder. Here is an
 to using roxygen2.
 
 ### To run tests
-1. Make sure you've set your API Key with `SetApiKey("YOUR_API_KEY")`.
+1. Make sure you've set your API Key with `SetApiKey("YOUR-API-KEY")`.
 
-2. Run the test suite:
+1. Make sure you're inside the `api-r/datacommons` directory.
 
-With keyboard shortcut: `Cmd/Ctrl + Shift + T`
+1. Run the test suite:
 
-Or in R console, run:
-```
-# Make sure you're inside the R API Client directory
-devtools::test()
-```
+    With keyboard shortcut: `Cmd/Ctrl + Shift + T`
+
+    Or in R console, run:
+    ```
+    devtools::test()
+    ```
 
 ### To build the library export tar.gz
 
-In the command line, run
+In the command line (terminal), `cd` into the `api-r` directory, and run
 
 ```
-R CMD BUILD api-R
+R CMD BUILD datacommons
 ```
 
 ### Working with Reticulate
