@@ -30,12 +30,12 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 
 This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.
 
-If you already [installed the client](https://github.com/datacommonsorg/api-r/blob/master/README.md#installing), you can skip this chunk and just run the next one. If you still need to install the client, make sure you have the dependencies listed in the [devtools guide](https://www.rstudio.com/products/rpackages/devtools/), then uncomment and run the following chunk.
+If you already [installed the client](https://github.com/datacommonsorg/api-r/blob/master/README.md#installing), you can skip this chunk and just run the next one. **If you still need to install the client**, make sure you have the dependencies listed in the [devtools guide](https://www.rstudio.com/products/rpackages/devtools/), then uncomment and run the following chunk.
 ```{r}
 ## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
-# if(!require(devtools)) install.packages("devtools", quiet=TRUE)
-# library(devtools, quiet=TRUE)
-# devtools::install_github("datacommonsorg/api-r", quiet=TRUE)
+# if(!require(devtools)) install.packages("devtools")
+# library(devtools)
+# devtools::install_github("datacommonsorg/api-r@v1.0.0-beta", subdir="datacommons")
 ```
 
 Let's load the client.
@@ -44,7 +44,10 @@ library(datacommons, quiet=TRUE)
 ```
 
 
-Using the Data Commons API requires you to provision an API key on GCP. Follow these steps to create your own key. To get an API key, follow the instructions [here](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key) to get your API key.
+**Using the Data Commons API requires you to provision an API key on GCP, and enable Data Commons on your GCP project:**
+
+1. Follow the instructions [in this section](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key) to get your API key.
+1. Follow the instructions [in the next section](https://datacommons.readthedocs.io/en/latest/started.html#enable-the-data-commons-api) to enable the Data Commons API for your GCP project.
 
 Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then run the following block.
 
