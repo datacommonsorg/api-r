@@ -269,7 +269,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -383,19 +382,19 @@ summary {
 <div id="using-the-r-api-client-to-analyse-statistics-in-data-commons" class="section level1">
 <h1>Using the R API Client to Analyse Statistics in Data Commons</h1>
 <p>This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.</p>
-<p>If you already <a href="https://github.com/datacommonsorg/api-r/blob/master/README.md#installing">installed the client</a>, you can skip this chunk and just run the next one. If you still need to install the client, make sure you have the dependencies listed in the <a href="https://www.rstudio.com/products/rpackages/devtools/">devtools guide</a>, then uncomment and run the following chunk.</p>
+<p>If you already <a href="https://github.com/datacommonsorg/api-r/blob/master/README.md#installing">installed the client</a>, you can skip this chunk and just run the next one. <strong>If you still need to install the client</strong>, make sure you have the dependencies listed in the <a href="https://www.rstudio.com/products/rpackages/devtools/">devtools guide</a>, then uncomment and run the following chunk.</p>
 <pre class="r"><code>## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
-# if(!require(devtools)) install.packages(&quot;devtools&quot;, quiet=TRUE)
-# library(devtools, quiet=TRUE)
-# devtools::install_github(&quot;datacommonsorg/api-r&quot;, quiet=TRUE)</code></pre>
+# if(!require(devtools)) install.packages(&quot;devtools&quot;)
+# library(devtools)
+# devtools::install_github(&quot;datacommonsorg/api-r@v1.0.0-beta&quot;, subdir=&quot;datacommons&quot;)</code></pre>
 <p>Let’s load the client.</p>
 <pre class="r"><code>library(datacommons, quiet=TRUE)</code></pre>
-<pre><code>## ── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## 
@@ -403,7 +402,11 @@ summary {
 <pre><code>## The following object is masked from 'package:purrr':
 ## 
 ##     flatten</code></pre>
-<p>Using the Data Commons API requires you to provision an API key on GCP. Follow these steps to create your own key. To get an API key, follow the instructions <a href="https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key">here</a> to get your API key.</p>
+<p><strong>Using the Data Commons API requires you to provision an API key on GCP, and enable Data Commons on your GCP project:</strong></p>
+<ol style="list-style-type: decimal">
+<li>Follow the instructions <a href="https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key">in this section</a> to get your API key.</li>
+<li>Follow the instructions <a href="https://datacommons.readthedocs.io/en/latest/started.html#enable-the-data-commons-api">in the next section</a> to enable the Data Commons API for your GCP project.</li>
+</ol>
 <p>Replace <code>Sys.getenv(&quot;API_KEY&quot;)</code> with your API key, such as “123456”. Then run the following block.</p>
 <pre class="r"><code>REPLACE_WITH_YOUR_API_KEY = Sys.getenv(&quot;API_KEY&quot;)
 
