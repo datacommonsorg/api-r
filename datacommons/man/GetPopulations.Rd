@@ -4,7 +4,7 @@
 \alias{GetPopulations}
 \title{Return StatisticalPopulations associated with specified dcids}
 \usage{
-GetPopulations(dcids, populationType, constraintsPVMap)
+GetPopulations(dcids, populationType, constraintsPVMap = NULL)
 }
 \arguments{
 \item{dcids}{required, dcid(s) identifying Places of populations to query
@@ -18,10 +18,9 @@ tibble/data frame, use \code{select(df, col)}.}
 \item{populationType}{required, string identifying the
 population type of the StatisticalPopulation.}
 
-\item{constraintsPVMap}{required, named list mapping constraining properties
-to the desired values that defines the returned StatisticalPopulations
-should be constrained by. Example:
-\code{list(employment = 'BLS_Employed')}}
+\item{constraintsPVMap}{optional, named list mapping constraining property to
+the value that the StatisticalPopulation should be constrained by. Empty by
+default. Example: \code{list(employment = 'BLS_Employed')}}
 }
 \value{
 If dcids input is a vector of strings, returns a named

@@ -389,12 +389,12 @@ summary {
 # devtools::install_github(&quot;datacommonsorg/api-r@v1.0.0-beta&quot;, subdir=&quot;datacommons&quot;)</code></pre>
 <p>Let’s load the client.</p>
 <pre class="r"><code>library(datacommons, quiet=TRUE)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## 
@@ -419,7 +419,7 @@ SetApiKey(REPLACE_WITH_YOUR_API_KEY)</code></pre>
 <li>The latitude of <a href="https://browser.datacommons.org/kg?dcid=geoId/0606000">Berkeley, CA</a> is 37.8703</li>
 <li>The <a href="https://browser.datacommons.org/kg?dcid=dc/o/6w1c9qk7hxjch">population of all persons in Maryland</a> has a total count of 5,996,080.</li>
 </ul>
-<p>In the graph, <a href="https://en.wikipedia.org/wiki/Entity"><em>entities</em></a> like <a href="https://browser.datacommons.org/kg?dcid=geoId/06085">Santa Clara County</a> are represented by nodes. Every node is uniquely identified by its <strong><code>dcid</code></strong> (Data Commons Identifier) and has a <strong><code>type</code></strong> corresponding to what the node represents. For example, <a href="https://browser.datacommons.org/kg?dcid=geoId/06">California</a> is identified by the dcid <code>geoId/06</code> and is of type <a href="https://browser.datacommons.org/kg?dcid=State">State</a>. <em>Relations</em> between entities are represented by directed edges between these nodes. For example, the statement “Santa Clara County is contained in the State of California” is represented in the graph as two nodes: “Santa Clara County” and “California” with an edge labeled “<a href="https://schema.org/containedInPlace">containedInPlace</a>” pointing from Santa Clara to California. This can be visualized by the following diagram.</p>
+<p>In the graph, <a href="https://en.wikipedia.org/wiki/Entity"><em>entities</em></a> like <a href="https://browser.datacommons.org/kg?dcid=geoId/06085">Santa Clara County</a> are represented by nodes. Every node is uniquely identified by its <strong><code>dcid</code></strong> (Data Commons Identifier) and has a <strong><code>type</code></strong> corresponding to what the node represents. For example, <a href="https://browser.datacommons.org/kg?dcid=geoId/06">California</a> is identified by the <code>dcid</code> <code>geoId/06</code> and is of type <a href="https://browser.datacommons.org/kg?dcid=State">State</a>. <em>Relations</em> between entities are represented by directed edges between these nodes. For example, the statement “Santa Clara County is contained in the State of California” is represented in the graph as two nodes: “Santa Clara County” and “California” with an edge labeled “<a href="https://schema.org/containedInPlace">containedInPlace</a>” pointing from Santa Clara to California. This can be visualized by the following diagram.</p>
 <div class="figure">
 <img src="data:image/png;base64,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" alt="A portion of the Data Commons graph" />
 <p class="caption">A portion of the Data Commons graph</p>
@@ -449,7 +449,7 @@ SetApiKey(REPLACE_WITH_YOUR_API_KEY)</code></pre>
 <pre><code>## [1] &quot;GetObservations&quot;   &quot;GetPlacesIn&quot;       &quot;GetPopulations&quot;   
 ## [4] &quot;GetPropertyLabels&quot; &quot;GetPropertyValues&quot; &quot;GetTriples&quot;       
 ## [7] &quot;Query&quot;             &quot;SetApiKey&quot;</code></pre>
-<p>To begin, we will initialize a tibble with the dcid associated with California: <a href="https://browser.datacommons.org/kg?dcid=geoId/06">geoId/06</a>.</p>
+<p>To begin, we will initialize a tibble with the <code>dcid</code> associated with California: <a href="https://browser.datacommons.org/kg?dcid=geoId/06">geoId/06</a>.</p>
 <pre class="r"><code># Initialize the tibble
 data = tibble('state' = 'geoId/06')
 
@@ -461,18 +461,18 @@ data</code></pre>
 ## 1 geoId/06</code></pre>
 <div id="accessing-properties-of-a-node" class="section level3">
 <h3>Accessing Properties of a Node</h3>
-<p>For all properties, one can use <strong><code>GetPropertyValues</code></strong> to get the associated values. We would like to know that the dcid we have in our data frame belongs to California by getting the name of the node identified by “geoId/06”.</p>
+<p>For all properties, one can use <strong><code>GetPropertyValues</code></strong> to get the associated values. We would like to know that the <code>dcid</code> we have in our data frame belongs to California by getting the name of the node identified by “geoId/06”.</p>
 <p>To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in <code>help</code> function or its <code>?</code> shortcut:</p>
 <pre class="r"><code>?GetPropertyValues</code></pre>
 <p><code>GetPropertyValues</code> accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector OR single-column tibble/data frame of string(s) that identify node(s) to get property values for.</li>
-<li><strong><code>prop</code></strong> - The property to get property values for.</li>
-<li><strong><code>outgoing</code></strong><code>[=TRUE]</code> - An optional flag that indicates the property is oriented away from the given nodes if true.</li>
-<li><strong><code>valueType</code></strong><code>[=NULL]</code> - An optional parameter which filters property values by the given type.</li>
-<li><strong><code>limit</code></strong><code>[=100]</code> - An optional parameter which limits the total number of property values returned <em>aggregated over all given nodes</em>.</li>
+<li><strong><code>dcids</code></strong> - vector OR single-column tibble/data frame of string(s) of <code>dcid</code>(s) to get property values for.</li>
+<li><strong><code>prop</code></strong> - string identifying the property to get the property values for.</li>
+<li><strong><code>outgoing</code></strong> - optional boolean flag indicating whether the property is directed away from the given nodes. TRUE by default</li>
+<li><strong><code>valueType</code></strong> - optional string identifying the node type to filter the returned property values by. NULL by default.</li>
+<li><strong><code>limit</code></strong> - optional integer indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.</li>
 </ul>
-<p>When the dcids are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given dcid. Some properties, like <a href="https://browser.datacommons.org/kg?dcid=containedInPlace">containedInPlace</a>, may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let’s take a look:</p>
+<p>When the <code>dcid</code>s are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given <code>dcid</code>. Some properties, like <a href="https://browser.datacommons.org/kg?dcid=containedInPlace">containedInPlace</a>, may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let’s take a look:</p>
 <pre class="r"><code># Call GetPropertyValues. Because the return value will be a column, we can 
 # assign it directly to a new column in our frame.
 data$state_name = GetPropertyValues(select(data, state), 'name')
@@ -495,10 +495,10 @@ data</code></pre>
 <h3>Working with Places in Data Commons</h3>
 <p>We would now like to get all Counties contained in California. This can be achieved by calling <code>GetPropertyValues</code>, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, <strong><code>GetPlacesIn</code></strong>, to get places contained within a list of given places. <code>GetPlacesIn</code> accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector or a single-column tibble/data frame of dcid strings identifying places to get places in.</li>
-<li><strong><code>placeType</code></strong> - The type of places contained in the given dcids to query for.</li>
+<li><strong><code>dcids</code></strong> - vector or a single-column tibble/data frame of <code>dcid</code>s to get contained in places.</li>
+<li><strong><code>placeType</code></strong> - string identifying type of places contained in the given <code>dcid</code>s to filter by.</li>
 </ul>
-<p>When dcids is specified as a column, the return value is a column with the same format as that returned by <code>GetPropertyValues</code>. Let’s call <code>GetPlacesIn</code> to get all counties within California.</p>
+<p>When <code>dcid</code>s is specified as a column, the return value is a column with the same format as that returned by <code>GetPropertyValues</code>. Let’s call <code>GetPlacesIn</code> to get all counties within California.</p>
 <pre class="r"><code># Call GetPlacesIn to get all counties in California. Here the type we use is 
 # &quot;County&quot;. See https://browser.datacommons.org/kg?dcid=County for examples of 
 # other nodes in the graph with type &quot;County&quot;.
@@ -572,17 +572,17 @@ data</code></pre>
 <li>The <strong><code>typeOf</code></strong> this node is <code>StatisticalPopulation</code> as expected.</li>
 <li>The <strong><code>populationType</code></strong> is <code>Person</code> telling us that this is a statistical population describing persons.</li>
 <li>The <strong><code>location</code></strong> of this node is <a href="https://browser.datacommons.org/kg?dcid=geoId/06085">Santa Clara County</a> telling us that the persons in this statistical population live in Santa Clara County.</li>
-<li>The <strong><code>dcid</code></strong> property tells us the dcid of this node</li>
+<li>The <strong><code>dcid</code></strong> property tells us the <code>dcid</code> of this node</li>
 <li>The <strong><code>localCuratorLevelId</code></strong> tells us information about how this node was uploaded to the graph. For the purposes of this tutorial, we can ignore this field.</li>
 </ul>
 <p>There are two other properties defined: <code>numConstraints</code> and <code>employment</code>. These two properties help us describe entities contained in this statistical population. Properties used to describe the entities captured by a StatisticalPopulation are called <em>constraining properties</em>. In the example above, <code>employment=BLS_Employed</code> is a constraining property that tells us the Statistical Population captures employed persons. <code>numConstraints</code> denotes how many constraining properties there are, and in the example above, <code>numConstraints=1</code> tells us that <code>employment</code> is the only constraining property.</p>
 <p>To query for <code>StatisticalPopulation</code>s using the Data Commons R API Client, we call <strong><code>GetPopulations</code></strong>. The function accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A list or Pandas Series of dcids denoting the locations of populations to query for.</li>
-<li><strong><code>populationType</code></strong> - The <code>populationType</code> of the <code>StatisticalPopulation</code></li>
-<li><strong><code>constraintsPVMap</code></strong> - An optional map from constraining property to the value that the <code>StatisticalPopulation</code> should be constrained by.</li>
+<li><strong><code>dcids</code></strong> - vector OR single-column tibble/dataframe of <code>dcid</code>(s) identifying <code>Place</code>s of <code>StatisticalPopulation</code>s to query for.</li>
+<li><strong><code>populationType</code></strong> - string identifying the population type of the <code>StatisticalPopulation</code>.</li>
+<li><strong><code>constraintsPVMap</code></strong> - optional named list mapping constraining property to the value that the <code>StatisticalPopulation</code> should be constrained by. Empty by default.</li>
 </ul>
-<p>When a column is provided to <code>dcids</code>, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of <code>dcids</code>, <code>populationType</code>, and optionally <code>constraintsPVMap</code> always map to a unique statistical population <code>dcid</code> if it exists.</p>
+<p>When a column is provided to <code>dcids</code>, the return value is a column with each cell populated by a single <code>dcid</code> and not a list. This is because the combination of <code>dcids</code>, <code>populationType</code>, and optionally <code>constraintsPVMap</code> always map to a unique <code>StatisticalPopulation</code> <code>dcid</code> if it exists.</p>
 <p>Let’s call <code>GetPopulations</code> to get the populations of all employed individuals living in counties specified by the <code>county</code> column of our tibble.</p>
 <pre class="r"><code># First we create the constraintsPVMap
 props &lt;- list(employment = 'BLS_Employed')
@@ -616,17 +616,17 @@ print(head(data))</code></pre>
 <li>The <strong><code>measurementMethod</code></strong> is <code>BLSSeasonallyUnadjusted</code> to indicate how the observation was adjusted. We can click on that link to see what <code>BLSSeasonallyUnadjusted</code> means.</li>
 <li>The <strong><code>observationDate</code></strong> is <code>2018-01</code>. This date is formatted by <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> standards.</li>
 <li>The <strong><code>observedPeriod</code></strong> is <code>P1M</code> to denote that this observation was carried over a period of 1 month.</li>
-<li>The <strong><code>observedNode</code></strong> which tells us what the node is being observed by the observation. Here its value is <code>dc/p/y6xm2mny8mck1</code> which is the dcid of the population of employed persons living in Santa Clara.</li>
+<li>The <strong><code>observedNode</code></strong> which tells us what the node is being observed by the observation. Here its value is <code>dc/p/y6xm2mny8mck1</code> which is the <code>dcid</code> of the population of employed persons living in Santa Clara.</li>
 </ul>
 <p>The final property of interest is <strong><code>measuredValue</code></strong>. This property tells us that the raw value observed by the observation (whose value is 1,015,129) in this case. The <code>measuredValue</code> is also a <em>statistic type</em> associated with the observation. For a single observation, there could be many statistics that describe it. One would be the raw value represented by <code>measuredValue</code>, while others include <code>meanValue</code>, <code>medianValue</code>, <code>marginOfError</code>, and more.</p>
 <p>These parameters are useful for deciding what values to provide to the API. To query for <code>Observation</code>s using the R API Client, we call <strong><code>GetObservations</code></strong> which accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector or single column tibble/data frame of dcids of nodes that are observed by observations being queried for.</li>
-<li><strong><code>measuredProperty</code></strong> - The <code>measuredProperty</code> of the observation.</li>
-<li><strong><code>statsType</code></strong> - The statistical type of the observation.</li>
-<li><strong><code>observationDate</code></strong> - The <code>observationDate</code> of the observation.</li>
-<li><strong><code>observationPeriod</code></strong><code>[=NULL]</code> - An optional parameter specifying the <code>observationPeriod</code> of the observation.</li>
-<li><strong><code>measurementMethod</code></strong><code>[=NULL]</code> - An optional parameter specifying the <code>measurementMethod</code> of the observation.</li>
+<li><strong><code>dcids</code></strong> - vector OR single column tibble/data frame of <code>dcid</code>s to get observations for.</li>
+<li><strong><code>measuredProperty</code></strong> - string identifying the measured property.</li>
+<li><strong><code>statsType</code></strong> - string identifying the statistical type for the observation.</li>
+<li><strong><code>observationDate</code></strong> - string of the associated observation date in ISO8601 format.</li>
+<li><strong><code>observationPeriod</code></strong> - string specifying the observation period. Required if the Observations you are querying for specify this field. NULL by default.</li>
+<li><strong><code>measurementMethod</code></strong> - string specifying the measurement method. Required if the Observations you are querying for specify this field. NULL by default.</li>
 </ul>
 <p>One thing to note is that not all <code>Observation</code>s will have a property value for <code>observationPeriod</code> and <code>measurementMethod</code>. For example, <a href="https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&amp;db=">the number of housing units with 3 bedrooms in Michigan</a> does not have <code>observationPeriod</code> while <a href="https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&amp;db=">number of Other Textile Mills</a> does not have <code>measurementMethod</code>. These parameters are thus optional arguments to the <code>GetObservations</code> API function.</p>
 <p>When a column is provided to <code>dcids</code>, the return value is again a column with each cell populated by the statistic and not a list of statistics. The combination of the above parameters always map to a unique observation if it exists. If the statistic does not exist for the given parameters, then the cell will contain <code>NaN</code>.</p>
