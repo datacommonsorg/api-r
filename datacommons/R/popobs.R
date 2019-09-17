@@ -38,10 +38,9 @@
 #'   tibble/data frame, use \code{select(df, col)}.
 #' @param populationType required, string identifying the
 #'   population type of the StatisticalPopulation.
-#' @param constraintsPVMap required, named list mapping constraining properties
-#'   to the desired values that defines the returned StatisticalPopulations
-#'   should be constrained by. Example:
-#'   \code{list(employment = 'BLS_Employed')}
+#' @param constraintsPVMap optional, named list mapping constraining property to
+#'   the value that the StatisticalPopulation should be constrained by. Empty by
+#'   default. Example: \code{list(employment = 'BLS_Employed')}
 #' @return If dcids input is a vector of strings, returns a named
 #'   list mapping a given dcid to the unique StatisticalPopulation
 #'   located at the dcid as specified by the populationType and
@@ -75,9 +74,13 @@
 #'                               list(gender = 'Male'))
 #' df$femalePops <- GetPopulations(select(df, countyDcid), 'Person',
 #'                                 list(gender = 'Female'))
-GetPopulations <- function(dcids, populationType, constraintsPVMap) {
+GetPopulations <- function(dcids, populationType, constraintsPVMap = NULL) {
   dcids = ConvertibleToPython(dcids)
-  return(CallPython(dc$get_populations, list(dcids, populationType, constraintsPVMap)))
+  if (is.null(constraintsPVMap)) {
+    return(CallPython(dc$get_populations, list(dcids, populationType)))
+  } else {
+    return(CallPython(dc$get_populations, list(dcids, populationType, constraintsPVMap)))
+  }
 }
 
 #' Return dcids of Observations observing the given dcids
