@@ -66,7 +66,7 @@ Data Commons is an open knowledge graph of structured data. It contains statemen
 * The latitude of [Berkeley, CA](https://browser.datacommons.org/kg?dcid=geoId/0606000) is 37.8703
 * The [population of all persons in Maryland ](https://browser.datacommons.org/kg?dcid=dc/o/6w1c9qk7hxjch) has a total count of 5,996,080.
 
-In the graph, [*entities*](https://en.wikipedia.org/wiki/Entity) like [Santa Clara County](https://browser.datacommons.org/kg?dcid=geoId/06085) are represented by nodes. Every node is uniquely identified by its **`dcid`** (Data Commons Identifier) and has a **`type`** corresponding to what the node represents. For example, [California](https://browser.datacommons.org/kg?dcid=geoId/06) is identified by the dcid `geoId/06` and is of type [State](https://browser.datacommons.org/kg?dcid=State). *Relations* between entities are represented by directed edges between these nodes. For example, the statement "Santa Clara County is contained in the State of California" is represented in the graph as two nodes: "Santa Clara County" and "California" with an edge labeled "[containedInPlace](https://schema.org/containedInPlace)" pointing from Santa Clara to California. This can be visualized by the following diagram.
+In the graph, [*entities*](https://en.wikipedia.org/wiki/Entity) like [Santa Clara County](https://browser.datacommons.org/kg?dcid=geoId/06085) are represented by nodes. Every node is uniquely identified by its **`dcid`** (Data Commons Identifier) and has a **`type`** corresponding to what the node represents. For example, [California](https://browser.datacommons.org/kg?dcid=geoId/06) is identified by the `dcid` `geoId/06` and is of type [State](https://browser.datacommons.org/kg?dcid=State). *Relations* between entities are represented by directed edges between these nodes. For example, the statement "Santa Clara County is contained in the State of California" is represented in the graph as two nodes: "Santa Clara County" and "California" with an edge labeled "[containedInPlace](https://schema.org/containedInPlace)" pointing from Santa Clara to California. This can be visualized by the following diagram.
 
 ![A portion of the Data Commons graph](https://storage.googleapis.com/notebook-resources/image-1.png)
 
@@ -98,7 +98,7 @@ ls(pos = "package:datacommons")
 ```
 
 
-To begin, we will initialize a tibble with the dcid associated with California: [geoId/06](https://browser.datacommons.org/kg?dcid=geoId/06).
+To begin, we will initialize a tibble with the `dcid` associated with California: [geoId/06](https://browser.datacommons.org/kg?dcid=geoId/06).
 
 ```{r}
 # Initialize the tibble
@@ -110,7 +110,7 @@ data
 
 ### Accessing Properties of a Node
 
-For all properties, one can use **`GetPropertyValues`** to get the associated values. We would like to know that the dcid we have in our data frame belongs to California by getting the name of the node identified by "geoId/06".
+For all properties, one can use **`GetPropertyValues`** to get the associated values. We would like to know that the `dcid` we have in our data frame belongs to California by getting the name of the node identified by "geoId/06".
 
 To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in `help` function or its `?` shortcut:
 ```{r}
@@ -119,14 +119,13 @@ To see the documentation for any function, you can bring up the R doc in the Hel
 
 `GetPropertyValues` accepts the following parameters.
 
-- **`dcids`** - vector OR single-column tibble/data frame of string(s) of dcid(s) to get property values for.
+- **`dcids`** - vector OR single-column tibble/data frame of string(s) of `dcid`(s) to get property values for.
 - **`prop`** - string identifying the property to get the property values for.
-- **`outgoing`** - optional boolean flag indicating whether the property
-#'   is directed away from the given nodes. TRUE by default
+- **`outgoing`** - optional boolean flag indicating whether the property is directed away from the given nodes. TRUE by default
 - **`valueType`** - optional string identifying the node type to filter the returned property values by. NULL by default.
 - **`limit`** - optional integer indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.
 
-When the dcids are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given dcid. Some properties, like [containedInPlace](https://browser.datacommons.org/kg?dcid=containedInPlace), may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let's take a look:
+When the `dcid`s are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given `dcid`. Some properties, like [containedInPlace](https://browser.datacommons.org/kg?dcid=containedInPlace), may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let's take a look:
 
 ```{r}
 # Call GetPropertyValues. Because the return value will be a column, we can 
@@ -148,10 +147,10 @@ data
 
 We would now like to get all Counties contained in California. This can be achieved by calling `GetPropertyValues`, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, **`GetPlacesIn`**, to get places contained within a list of given places. `GetPlacesIn` accepts the following parameters.
 
-- **`dcids`** - vector or a single-column tibble/data frame of dcids to get contained in places.
-- **`placeType`** - string identifying type of places contained in the given dcids to filter by.
+- **`dcids`** - vector or a single-column tibble/data frame of `dcid`s to get contained in places.
+- **`placeType`** - string identifying type of places contained in the given `dcid`s to filter by.
 
-When dcids is specified as a column, the return value is a column with the same format as that returned by `GetPropertyValues`. Let's call `GetPlacesIn` to get all counties within California.
+When `dcid`s is specified as a column, the return value is a column with the same format as that returned by `GetPropertyValues`. Let's call `GetPlacesIn` to get all counties within California.
 
 ```{r}
 # Call GetPlacesIn to get all counties in California. Here the type we use is 
@@ -205,7 +204,7 @@ At the top of the browser page, we are presented a few properties of this node t
 - The **`typeOf`** this node is `StatisticalPopulation` as expected.
 - The **`populationType`** is `Person` telling us that this is a statistical population describing persons.
 - The **`location`** of this node is [Santa Clara County](https://browser.datacommons.org/kg?dcid=geoId/06085) telling us that the persons in this statistical population live in Santa Clara County.
-- The **`dcid`** property tells us the dcid of this node
+- The **`dcid`** property tells us the `dcid` of this node
 - The **`localCuratorLevelId`** tells us information about how this node was uploaded to the graph. For the purposes of this tutorial, we can ignore this field.
 
 There are two other properties defined: `numConstraints` and `employment`. These two properties help us describe entities contained in this statistical population. Properties used to describe the entities captured by a StatisticalPopulation are called *constraining properties*. In the example above, `employment=BLS_Employed` is a constraining property that tells us the Statistical Population captures employed persons. `numConstraints` denotes how many constraining properties there are, and in the example above, `numConstraints=1` tells us that `employment` is the only constraining property.
@@ -214,9 +213,9 @@ To query for `StatisticalPopulation`s using the Data Commons R API Client, we ca
 
 - **`dcids`** - vector OR single-column tibble/dataframe of `dcid`(s) identifying `Place`s of `StatisticalPopulation`s to query for.
 - **`populationType`** - string identifying the population type of the `StatisticalPopulation`.
-- **`constraintsPVMap`** - named list mapping constraining properties to the desired values that defines the returned `StatisticalPopulations` should be constrained by.
+- **`constraintsPVMap`** - optional named list mapping constraining property to the value that the `StatisticalPopulation` should be constrained by. Empty by default.
 
-When a column is provided to `dcids`, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of `dcids`, `populationType`, and optionally `constraintsPVMap` always map to a unique statistical population `dcid` if it exists.
+When a column is provided to `dcids`, the return value is a column with each cell populated by a single `dcid` and not a list. This is because the combination of `dcids`, `populationType`, and optionally `constraintsPVMap` always map to a unique `StatisticalPopulation` `dcid` if it exists.
 
 Let's call `GetPopulations` to get the populations of all employed individuals living in counties specified by the `county` column of our tibble.
 
@@ -244,18 +243,18 @@ In this page, there are a few properties to consider:
 - The **`measurementMethod`** is `BLSSeasonallyUnadjusted` to indicate how the observation was adjusted. We can click on that link to see what `BLSSeasonallyUnadjusted` means.
 - The **`observationDate`** is `2018-01`. This date is formatted by [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) standards.
 - The **`observedPeriod`** is `P1M` to denote that this observation was carried over a period of 1 month.
-- The **`observedNode`** which tells us what the node is being observed by the observation. Here its value is `dc/p/y6xm2mny8mck1` which is the dcid of the population of employed persons living in Santa Clara.
+- The **`observedNode`** which tells us what the node is being observed by the observation. Here its value is `dc/p/y6xm2mny8mck1` which is the `dcid` of the population of employed persons living in Santa Clara.
 
 The final property of interest is **`measuredValue`**. This property tells us that the raw value observed by the observation (whose value is 1,015,129) in this case. The `measuredValue` is also a *statistic type* associated with the observation. For a single observation, there could be many statistics that describe it. One would be the raw value represented by `measuredValue`, while others include `meanValue`, `medianValue`, `marginOfError`, and more.
 
 These parameters are useful for deciding what values to provide to the API. To query for `Observation`s using the R API Client, we call **`GetObservations`** which accepts the following parameters.
 
-- **`dcids`** - vector OR single column tibble/data frame of dcids to get observations for.
+- **`dcids`** - vector OR single column tibble/data frame of `dcid`s to get observations for.
 - **`measuredProperty`** - string identifying the measured property.
 - **`statsType`** - string identifying the statistical type for the observation.
 - **`observationDate`** - string of the associated observation date in ISO8601 format.
-- **`observationPeriod`** - optional string specifying the observation period. NULL by default.
-- **`measurementMethod`** - optional string specifying the measurement method. NULL by default.
+- **`observationPeriod`** - string specifying the observation period. Required if the Observations you are querying for specify this field. NULL by default.
+- **`measurementMethod`** - string specifying the measurement method. Required if the Observations you are querying for specify this field. NULL by default.
 
 One thing to note is that not all `Observation`s will have a property value for `observationPeriod` and `measurementMethod`. For example, [the number of housing units with 3 bedrooms in Michigan](https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&db=) does not have `observationPeriod` while [number of Other Textile Mills](https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&db=) does not have `measurementMethod`. These parameters are thus optional arguments to the `GetObservations` API function.
 
