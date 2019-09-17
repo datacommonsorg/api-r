@@ -389,12 +389,12 @@ summary {
 # devtools::install_github(&quot;datacommonsorg/api-r@v1.0.0-beta&quot;, subdir=&quot;datacommons&quot;)</code></pre>
 <p>Let’s load the client.</p>
 <pre class="r"><code>library(datacommons, quiet=TRUE)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ─────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## 
@@ -466,11 +466,11 @@ data</code></pre>
 <pre class="r"><code>?GetPropertyValues</code></pre>
 <p><code>GetPropertyValues</code> accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector OR single-column tibble/data frame of string(s) that identify node(s) to get property values for.</li>
-<li><strong><code>prop</code></strong> - The property to get property values for.</li>
-<li><strong><code>outgoing</code></strong><code>[=TRUE]</code> - An optional flag that indicates the property is oriented away from the given nodes if true.</li>
-<li><strong><code>valueType</code></strong><code>[=NULL]</code> - An optional parameter which filters property values by the given type.</li>
-<li><strong><code>limit</code></strong><code>[=100]</code> - An optional parameter which limits the total number of property values returned <em>aggregated over all given nodes</em>.</li>
+<li><strong><code>dcids</code></strong> - vector OR single-column tibble/data frame of string(s) of dcid(s) to get property values for.</li>
+<li><strong><code>prop</code></strong> - string identifying the property to get the property values for.</li>
+<li><strong><code>outgoing</code></strong> - optional boolean flag indicating whether the property #’ is directed away from the given nodes. TRUE by default</li>
+<li><strong><code>valueType</code></strong> - optional string identifying the node type to filter the returned property values by. NULL by default.</li>
+<li><strong><code>limit</code></strong> - optional integer indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.</li>
 </ul>
 <p>When the dcids are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given dcid. Some properties, like <a href="https://browser.datacommons.org/kg?dcid=containedInPlace">containedInPlace</a>, may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let’s take a look:</p>
 <pre class="r"><code># Call GetPropertyValues. Because the return value will be a column, we can 
@@ -495,8 +495,8 @@ data</code></pre>
 <h3>Working with Places in Data Commons</h3>
 <p>We would now like to get all Counties contained in California. This can be achieved by calling <code>GetPropertyValues</code>, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, <strong><code>GetPlacesIn</code></strong>, to get places contained within a list of given places. <code>GetPlacesIn</code> accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector or a single-column tibble/data frame of dcid strings identifying places to get places in.</li>
-<li><strong><code>placeType</code></strong> - The type of places contained in the given dcids to query for.</li>
+<li><strong><code>dcids</code></strong> - vector or a single-column tibble/data frame of dcids to get contained in places.</li>
+<li><strong><code>placeType</code></strong> - string identifying type of places contained in the given dcids to filter by.</li>
 </ul>
 <p>When dcids is specified as a column, the return value is a column with the same format as that returned by <code>GetPropertyValues</code>. Let’s call <code>GetPlacesIn</code> to get all counties within California.</p>
 <pre class="r"><code># Call GetPlacesIn to get all counties in California. Here the type we use is 
@@ -578,9 +578,9 @@ data</code></pre>
 <p>There are two other properties defined: <code>numConstraints</code> and <code>employment</code>. These two properties help us describe entities contained in this statistical population. Properties used to describe the entities captured by a StatisticalPopulation are called <em>constraining properties</em>. In the example above, <code>employment=BLS_Employed</code> is a constraining property that tells us the Statistical Population captures employed persons. <code>numConstraints</code> denotes how many constraining properties there are, and in the example above, <code>numConstraints=1</code> tells us that <code>employment</code> is the only constraining property.</p>
 <p>To query for <code>StatisticalPopulation</code>s using the Data Commons R API Client, we call <strong><code>GetPopulations</code></strong>. The function accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A list or Pandas Series of dcids denoting the locations of populations to query for.</li>
-<li><strong><code>populationType</code></strong> - The <code>populationType</code> of the <code>StatisticalPopulation</code></li>
-<li><strong><code>constraintsPVMap</code></strong> - An optional map from constraining property to the value that the <code>StatisticalPopulation</code> should be constrained by.</li>
+<li><strong><code>dcids</code></strong> - vector OR single-column tibble/dataframe of <code>dcid</code>(s) identifying <code>Place</code>s of <code>StatisticalPopulation</code>s to query for.</li>
+<li><strong><code>populationType</code></strong> - string identifying the population type of the <code>StatisticalPopulation</code>.</li>
+<li><strong><code>constraintsPVMap</code></strong> - named list mapping constraining properties to the desired values that defines the returned <code>StatisticalPopulations</code> should be constrained by.</li>
 </ul>
 <p>When a column is provided to <code>dcids</code>, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of <code>dcids</code>, <code>populationType</code>, and optionally <code>constraintsPVMap</code> always map to a unique statistical population <code>dcid</code> if it exists.</p>
 <p>Let’s call <code>GetPopulations</code> to get the populations of all employed individuals living in counties specified by the <code>county</code> column of our tibble.</p>
@@ -621,12 +621,12 @@ print(head(data))</code></pre>
 <p>The final property of interest is <strong><code>measuredValue</code></strong>. This property tells us that the raw value observed by the observation (whose value is 1,015,129) in this case. The <code>measuredValue</code> is also a <em>statistic type</em> associated with the observation. For a single observation, there could be many statistics that describe it. One would be the raw value represented by <code>measuredValue</code>, while others include <code>meanValue</code>, <code>medianValue</code>, <code>marginOfError</code>, and more.</p>
 <p>These parameters are useful for deciding what values to provide to the API. To query for <code>Observation</code>s using the R API Client, we call <strong><code>GetObservations</code></strong> which accepts the following parameters.</p>
 <ul>
-<li><strong><code>dcids</code></strong> - A vector or single column tibble/data frame of dcids of nodes that are observed by observations being queried for.</li>
-<li><strong><code>measuredProperty</code></strong> - The <code>measuredProperty</code> of the observation.</li>
-<li><strong><code>statsType</code></strong> - The statistical type of the observation.</li>
-<li><strong><code>observationDate</code></strong> - The <code>observationDate</code> of the observation.</li>
-<li><strong><code>observationPeriod</code></strong><code>[=NULL]</code> - An optional parameter specifying the <code>observationPeriod</code> of the observation.</li>
-<li><strong><code>measurementMethod</code></strong><code>[=NULL]</code> - An optional parameter specifying the <code>measurementMethod</code> of the observation.</li>
+<li><strong><code>dcids</code></strong> - vector OR single column tibble/data frame of dcids to get observations for.</li>
+<li><strong><code>measuredProperty</code></strong> - string identifying the measured property.</li>
+<li><strong><code>statsType</code></strong> - string identifying the statistical type for the observation.</li>
+<li><strong><code>observationDate</code></strong> - string of the associated observation date in ISO8601 format.</li>
+<li><strong><code>observationPeriod</code></strong> - optional string specifying the observation period. NULL by default.</li>
+<li><strong><code>measurementMethod</code></strong> - optional string specifying the measurement method. NULL by default.</li>
 </ul>
 <p>One thing to note is that not all <code>Observation</code>s will have a property value for <code>observationPeriod</code> and <code>measurementMethod</code>. For example, <a href="https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&amp;db=">the number of housing units with 3 bedrooms in Michigan</a> does not have <code>observationPeriod</code> while <a href="https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&amp;db=">number of Other Textile Mills</a> does not have <code>measurementMethod</code>. These parameters are thus optional arguments to the <code>GetObservations</code> API function.</p>
 <p>When a column is provided to <code>dcids</code>, the return value is again a column with each cell populated by the statistic and not a list of statistics. The combination of the above parameters always map to a unique observation if it exists. If the statistic does not exist for the given parameters, then the cell will contain <code>NaN</code>.</p>

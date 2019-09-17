@@ -119,11 +119,12 @@ To see the documentation for any function, you can bring up the R doc in the Hel
 
 `GetPropertyValues` accepts the following parameters.
 
-- **`dcids`** - A vector OR single-column tibble/data frame of string(s) that identify node(s) to get property values for.
-- **`prop`** - The property to get property values for.
-- **`outgoing`**`[=TRUE]` - An optional flag that indicates the property is oriented away from the given nodes if true.
-- **`valueType`**`[=NULL]` - An optional parameter which filters property values by the given type. 
-- **`limit`**`[=100]` - An optional parameter which limits the total number of property values returned *aggregated over all given nodes*.
+- **`dcids`** - vector OR single-column tibble/data frame of string(s) of dcid(s) to get property values for.
+- **`prop`** - string identifying the property to get the property values for.
+- **`outgoing`** - optional boolean flag indicating whether the property
+#'   is directed away from the given nodes. TRUE by default
+- **`valueType`** - optional string identifying the node type to filter the returned property values by. NULL by default.
+- **`limit`** - optional integer indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.
 
 When the dcids are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given dcid. Some properties, like [containedInPlace](https://browser.datacommons.org/kg?dcid=containedInPlace), may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let's take a look:
 
@@ -147,8 +148,8 @@ data
 
 We would now like to get all Counties contained in California. This can be achieved by calling `GetPropertyValues`, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, **`GetPlacesIn`**, to get places contained within a list of given places. `GetPlacesIn` accepts the following parameters.
 
-- **`dcids`** - A vector or a single-column tibble/data frame of dcid strings identifying places to get places in.
-- **`placeType`** - The type of places contained in the given dcids to query for.
+- **`dcids`** - vector or a single-column tibble/data frame of dcids to get contained in places.
+- **`placeType`** - string identifying type of places contained in the given dcids to filter by.
 
 When dcids is specified as a column, the return value is a column with the same format as that returned by `GetPropertyValues`. Let's call `GetPlacesIn` to get all counties within California.
 
@@ -211,9 +212,9 @@ There are two other properties defined: `numConstraints` and `employment`. These
 
 To query for `StatisticalPopulation`s using the Data Commons R API Client, we call **`GetPopulations`**. The function accepts the following parameters.
 
-- **`dcids`** - A list or Pandas Series of dcids denoting the locations of populations to query for.
-- **`populationType`** - The `populationType` of the `StatisticalPopulation`
-- **`constraintsPVMap`** - An optional map from constraining property to the value that the `StatisticalPopulation` should be constrained by.
+- **`dcids`** - vector OR single-column tibble/dataframe of `dcid`(s) identifying `Place`s of `StatisticalPopulation`s to query for.
+- **`populationType`** - string identifying the population type of the `StatisticalPopulation`.
+- **`constraintsPVMap`** - named list mapping constraining properties to the desired values that defines the returned `StatisticalPopulations` should be constrained by.
 
 When a column is provided to `dcids`, the return value is a column with each cell populated by a single dcid and not a list. This is because the combination of `dcids`, `populationType`, and optionally `constraintsPVMap` always map to a unique statistical population `dcid` if it exists.
 
@@ -249,12 +250,12 @@ The final property of interest is **`measuredValue`**. This property tells us th
 
 These parameters are useful for deciding what values to provide to the API. To query for `Observation`s using the R API Client, we call **`GetObservations`** which accepts the following parameters.
 
-- **`dcids`** - A vector or single column tibble/data frame of dcids of nodes that are observed by observations being queried for.
-- **`measuredProperty`** - The `measuredProperty` of the observation.
-- **`statsType`** - The statistical type of the observation.
-- **`observationDate`** - The `observationDate` of the observation.
-- **`observationPeriod`**`[=NULL]` - An optional parameter specifying the `observationPeriod` of the observation.
-- **`measurementMethod`**`[=NULL]` - An optional parameter specifying the `measurementMethod` of the observation.
+- **`dcids`** - vector OR single column tibble/data frame of dcids to get observations for.
+- **`measuredProperty`** - string identifying the measured property.
+- **`statsType`** - string identifying the statistical type for the observation.
+- **`observationDate`** - string of the associated observation date in ISO8601 format.
+- **`observationPeriod`** - optional string specifying the observation period. NULL by default.
+- **`measurementMethod`** - optional string specifying the measurement method. NULL by default.
 
 One thing to note is that not all `Observation`s will have a property value for `observationPeriod` and `measurementMethod`. For example, [the number of housing units with 3 bedrooms in Michigan](https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&db=) does not have `observationPeriod` while [number of Other Textile Mills](https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&db=) does not have `measurementMethod`. These parameters are thus optional arguments to the `GetObservations` API function.
 
