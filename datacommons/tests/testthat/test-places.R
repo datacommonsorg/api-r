@@ -14,12 +14,12 @@
 
 context("Data Commons Node API (Places Extension) - R Client")
 
-test_that("GetPlaces gets correct containment data", {
+test_that("get_places_in gets correct containment data", {
   skip_if_no_dcpy()
   # INPUT atomic vector of the dcids of Santa Clara and Montgomery County.
   countyDcids <- c('geoId/06085', 'geoId/24031')
   # Get towns in Santa Clara and Montgomery County.
-  towns <- GetPlacesIn(countyDcids, 'Town')
+  towns <- get_places_in(countyDcids, 'Town')
 
   expect_equal(length(towns), 2)
 
@@ -32,23 +32,23 @@ test_that("GetPlaces gets correct containment data", {
   expect_match(towns[['geoId/24031']][5], "geoId/24.*")
 })
 
-test_that("GetPlaces fails with invalid API key", {
+test_that("get_places_in fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  SetApiKey("fooo")
-  expect_error(GetPlacesIn(c('geoId/06085', 'geoId/24031'), 'Town'),
+  set_api_key("fooo")
+  expect_error(get_places_in(c('geoId/06085', 'geoId/24031'), 'Town'),
                ".*Response error: An HTTP 400 code.*")
-  SetApiKey(tmp)
+  set_api_key(tmp)
 })
 
-test_that("GetPlaces works with tibble/data frame input", {
+test_that("get_places_in works with tibble/data frame input", {
   skip_if_no_dcpy()
   # INPUT tibble of the dcids of Santa Clara and Montgomery County.
   df <- tibble(countyDcid = c('geoId/06085', 'geoId/24031'))
   # Get towns in Santa Clara and Montgomery County.
-  df$townDcid <- GetPlacesIn(df, 'Town')
-  # Since GetPlacesIn returned a mapping between counties and
+  df$townDcid <- get_places_in(df, 'Town')
+  # Since get_places_in returned a mapping between counties and
   # a list of towns, use you can use tidyr::unnest to create
   # a 1-1 mapping between each county and its towns.
 

@@ -6,7 +6,7 @@ This R API Client facilitates querying the [DataCommons.org](https://datacommons
 Open Knowledge Graph from R.
 
 Querying the graph via [SPARQL](https://en.wikipedia.org/wiki/SPARQL)
-queries to the Data Commons REST API endpoint go through the `Query` function. For example:
+queries to the Data Commons REST API endpoint go through the `query` function. For example:
 
 ```
 # Populate a data frame with columns specified with SPARQL
@@ -18,31 +18,31 @@ queryString = "SELECT ?pop ?Unemployment
      ?o observedNode ?pop .
      ?o measuredValue ?Unemployment
    }"
-df = Query(queryString)
+df = query(queryString)
 ```
 
 Calls to the Data Commons Node API endpoint are facilitated by functions:
 
-- `GetTriples`: get all triples (subject-predicate-object) where the specified node is
+- `get_triples`: get all triples (subject-predicate-object) where the specified node is
   either a subject or an object.
   
-- `GetPropertyValues`: get values neighboring each specified node via the specified
+- `get_property_values`: get values neighboring each specified node via the specified
   property and direction.
   
-- `GetPropertyLabels`: get property labels of each specified node.
+- `get_property_labels`: get property labels of each specified node.
 
-- `GetPlacesIn`: get places of a specified type contained in each specified place.
+- `get_places_in`: get places of a specified type contained in each specified place.
 
-- `GetPopulations`: get populations of each specified place.
+- `get_populations`: get populations of each specified place.
 
-- `GetObservations`: get observations on the specified property of each node.
+- `get_observations`: get observations on the specified property of each node.
 
 For example:
 ```
 # DCID string of Santa Clara County
 sccDcid <- 'geoId/06085'
 # Get incoming properties of Santa Clara County
-inLabels <- GetPropertyLabels(sccDcid, outgoing = FALSE)
+inLabels <- get_property_labels(sccDcid, out = FALSE)
 ```
 
 WiFi is needed for all functions in this package. For more detail on usage of any of these functions, use `help(function)` in the R console, or the shortcut `?function`.
@@ -79,7 +79,7 @@ R CMD INSTALL <the tar.gz file>
 3. Return to the R console to load in the client and set the API key so you can get started:
 ```
 library(datacommons)
-SetApiKey("YOUR-API-KEY")
+set_api_key("YOUR-API-KEY")
 ```
 
 #### Using the R devtools Library
@@ -95,7 +95,7 @@ if(!require(devtools)) install.packages("devtools")
 library(devtools)
 devtools::install_github("datacommonsorg/api-r@<TAG>", subdir="datacommons")
 library(datacommons)
-SetApiKey("YOUR-API-KEY")
+set_api_key("YOUR-API-KEY")
 ```
 
 #### Cloning and Building from GitHub
@@ -121,7 +121,7 @@ if(!require(devtools)) install.packages("devtools")
 library(devtools)
 # Make sure you're inside the api-r/datacommons directory
 devtools::load_all()
-SetApiKey("YOUR-API-KEY")
+set_api_key("YOUR-API-KEY")
 ```
 
 #### Tutorial
@@ -171,7 +171,7 @@ Keyboard shortcut: `Cmd/Ctrl + Shift + L`
 Or in R console, run:
 ```
 devtools::load_all()
-SetApiKey("YOUR-API-KEY")
+set_api_key("YOUR-API-KEY")
 ```
 
 ### To generate/regenerate the docs
@@ -193,7 +193,7 @@ any changes to the docstrings in the R/ folder. Here is an
 to using roxygen2.
 
 ### To run tests
-1. Make sure you've set your API Key with `SetApiKey("YOUR-API-KEY")`.
+1. Make sure you've set your API Key with `set_api_key("YOUR-API-KEY")`.
 
 1. Make sure you're inside the `api-r/datacommons` directory.
 

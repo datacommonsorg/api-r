@@ -14,17 +14,17 @@
 
 context("Data Commons Node API (Core) - R Client")
 
-test_that("GetPropertyLabels returns incoming and outgoing labels", {
+test_that("get_property_labels returns incoming and outgoing labels", {
   skip_if_no_dcpy()
 
   sccDcid <- list('geoId/06085')
 
-  expect_true('containedInPlace' %in% GetPropertyLabels(sccDcid, outgoing = FALSE)[[1]])
+  expect_true('containedInPlace' %in% get_property_labels(sccDcid, out = FALSE)[[1]])
 
   expectedOutLabels = c("ansiCode", "containedInPlace", "geoId", "kmlCoordinates",
                         "landArea", "latitude", "longitude", "name", "provenance",
                         "typeOf", "waterArea")
-  actualOutLabels = GetPropertyLabels(sccDcid)
+  actualOutLabels = get_property_labels(sccDcid)
   expect_true('geoId' %in% actualOutLabels[[1]])
   expect_true('name' %in% actualOutLabels[[1]])
   expect_true('typeOf' %in% actualOutLabels[[1]])
@@ -33,38 +33,38 @@ test_that("GetPropertyLabels returns incoming and outgoing labels", {
 
   dcids <- c('geoId/12', 'plannedParenthood-PlannedParenthoodWest',
              'politicalParty/RepublicanParty')
-  inLabels <- GetPropertyLabels(dcids, outgoing = FALSE)
-  outLabels <- GetPropertyLabels(dcids)
+  inLabels <- get_property_labels(dcids, out = FALSE)
+  outLabels <- get_property_labels(dcids)
   expect_equal(length(inLabels), 3)
   expect_gt(length(unlist(inLabels)), 4)
   expect_equal(length(outLabels), 3)
   expect_gt(length(unlist(outLabels)), 15)
 })
 
-test_that("GetPropertyLabels fails with invalid API key", {
+test_that("get_property_labels fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  SetApiKey("invalidkey")
-  expect_error(GetPropertyLabels(list('geoId/06085'), outgoing = FALSE),
+  set_api_key("invalidkey")
+  expect_error(get_property_labels(list('geoId/06085'), out = FALSE),
                ".*Response error: An HTTP 400 code.*")
-  SetApiKey(tmp)
+  set_api_key(tmp)
 })
 
-test_that("GetPropertyValues returns incoming and outgoing edges", {
+test_that("get_property_values returns incoming and outgoing edges", {
   skip_if_no_dcpy()
 
   # INPUT atomic vector of Santa Clara County dcid
   sccDcid <- 'geoId/06085'
-  landArea <- GetPropertyValues(sccDcid, 'landArea')
-  area <- GetPropertyValues(unname(landArea), 'value')
+  landArea <- get_property_values(sccDcid, 'landArea')
+  area <- get_property_values(unname(landArea), 'value')
 
   expect_gt(as.numeric(area), 2000000000)
   expect_lt(as.numeric(area), 5000000000)
 
   countyDcids <- c('geoId/06085', 'geoId/12086')
   # Get all containing Cities.
-  cityDcids <- GetPropertyValues(countyDcids, 'containedInPlace', outgoing = FALSE, valueType = 'City')
+  cityDcids <- get_property_values(countyDcids, 'containedInPlace', out = FALSE, value_type = 'City')
 
   expect_gt(length(cityDcids['geoId/12086'][[1]]), 60)
   expect_lt(length(cityDcids['geoId/12086'][[1]]), 80)
@@ -77,31 +77,31 @@ test_that("GetPropertyValues returns incoming and outgoing edges", {
   # INPUT tibble with Santa Clara and Miami-Dade County dcids
   df <- tibble(countyDcid = c('geoId/06085', 'geoId/12086'))
   # Get all containing Cities.
-  df$cityDcid <- GetPropertyValues(df$countyDcid, 'containedInPlace', outgoing = FALSE, valueType = 'City')
+  df$cityDcid <- get_property_values(df$countyDcid, 'containedInPlace', out = FALSE, value_type = 'City')
   expect_setequal(df$cityDcid, cityDcids)
 
   # INPUT data frame with Santa Clara and Miami-Dade County dcids
   df <- data.frame(countyDcid = c('geoId/06085', 'geoId/12086'))
   # Get all containing Cities.
-  df$cityDcid <- GetPropertyValues(select(df, countyDcid), 'containedInPlace', outgoing = FALSE, valueType = 'City')
+  df$cityDcid <- get_property_values(select(df, countyDcid), 'containedInPlace', out = FALSE, value_type = 'City')
   expect_setequal(df$cityDcid, cityDcids)
 })
 
-test_that("GetPropertyValues fails with fake API key", {
+test_that("get_property_values fails with fake API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  SetApiKey("fakekey")
-  expect_error(GetPropertyValues(list('geoId/06085'), 'landArea'),
+  set_api_key("fakekey")
+  expect_error(get_property_values(list('geoId/06085'), 'landArea'),
                ".*Response error: An HTTP 400 code.*")
-  SetApiKey(tmp)
+  set_api_key(tmp)
 })
 
-test_that("GetTriples returns triples involving given dcid(s)", {
+test_that("get_triples returns triples involving given dcid(s)", {
   skip_if_no_dcpy()
 
   sccDcid <- 'geoId/06085'
-  triples <- GetTriples(sccDcid, limit=100)
+  triples <- get_triples(sccDcid, limit=100)
 
   expect_equal(length(triples), 1)
   expect_gte(length(triples[[1]]), 100)
@@ -110,7 +110,7 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   expect_equal(length(triples[[1]][[80]]), 3)
 
   countyDcids <- c('geoId/06085', 'geoId/12086')
-  triples2 <- GetTriples(countyDcids, limit=100)
+  triples2 <- get_triples(countyDcids, limit=100)
 
   expect_equal(length(triples2), 2)
   expect_equal(length(triples2[[1]]), length(triples[[1]]))
@@ -120,12 +120,12 @@ test_that("GetTriples returns triples involving given dcid(s)", {
   expect_equal(length(triples2[[2]][[80]]), 3)
 })
 
-test_that("GetTriples fails with invalid API key", {
+test_that("get_triples fails with invalid API key", {
   skip_if_no_dcpy()
 
   tmp <- Sys.getenv("API_KEY")
-  SetApiKey("invalidkey")
-  expect_error(GetTriples(list('geoId/06085'), limit=100),
+  set_api_key("invalidkey")
+  expect_error(get_triples(list('geoId/06085'), limit=100),
                ".*Response error: An HTTP 400 code*")
-  SetApiKey(tmp)
+  set_api_key(tmp)
 })

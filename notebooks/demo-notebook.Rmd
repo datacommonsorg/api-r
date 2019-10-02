@@ -22,15 +22,15 @@ output:
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. To execute chunks, click the *Run* button within the chunk, or by placing your cursor inside it and press *Cmd+Shift+Enter*.
 
-**FEEDBACK REQUEST** thanks for checking out our API demo. After using this, we would greatly appreciate your feedback. You can send an [issue request](https://github.com/datacommonsorg/api-r/issues) and mark the issue using the **feedback** label!
+**FEEDBACK REQUEST**: Thank you for checking out our API demo. We would greatly appreciate your feedback. You can send an [issue request](https://github.com/datacommonsorg/api-r/issues) and mark the issue using the **feedback** label!
 
-**DISCLAIMER** this notebook uses an experimental version of the Data Commons R API Client. The semantics and availability of this API may be subject to change without prior notice!
+**DISCLAIMER**: This notebook uses an experimental version of the Data Commons R API Client. The semantics and availability of this API may be subject to change without prior notice!
 
 # Using the R API Client to Analyse Statistics in Data Commons
 
 This tutorial introduces the Data Commons open knowledge graph and discusses how to programmatically access its data through the R API Client.
 
-If you already [installed the client](https://github.com/datacommonsorg/api-r/blob/master/README.md#installing), you can skip this chunk and just run the next one. **If you still need to install the client**, make sure you have the dependencies listed in the [devtools guide](https://www.rstudio.com/products/rpackages/devtools/), then uncomment and run the following chunk.
+If you already [installed the client](https://github.com/datacommonsorg/api-r/blob/master/README.md#installing), you can skip this chunk and just run the next one. **If you still need to install the client**, uncomment and run the following chunk.
 ```{r}
 ## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
 # if(!require(devtools)) install.packages("devtools")
@@ -46,15 +46,14 @@ library(datacommons, quiet=TRUE)
 
 **Using the Data Commons API requires you to provision an API key on GCP, and enable Data Commons on your GCP project:**
 
-1. Follow the instructions [in this section](https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key) to get your API key.
-1. Follow the instructions [in the next section](https://datacommons.readthedocs.io/en/latest/started.html#enable-the-data-commons-api) to enable the Data Commons API for your GCP project.
+1. Follow the instructions [on this page](http://docs.datacommons.org/api/setup.html) to create your API key and enable the Data Commons API for your GCP project.
 
-Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then run the following block.
+1. Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then run the following block.
 
 ```{r}
 REPLACE_WITH_YOUR_API_KEY = Sys.getenv("API_KEY")
 
-SetApiKey(REPLACE_WITH_YOUR_API_KEY)
+set_api_key(REPLACE_WITH_YOUR_API_KEY)
 ```
 
 
@@ -86,10 +85,10 @@ The R API Client provides functions for users to programmatically access nodes i
 
 The [Bureau of Labor Statistics](https://www.bls.gov) provides a monthly count for number of individuals who are employed at the State, County, and City level. This data is surfaced in the Data Commons; for example, one can find employment statistics associated with Santa Clara County [here](https://browser.datacommons.org/kg?dcid=dc/p/y6xm2mny8mck1&db=). Our task for this tutorial will be to extract employment data associated with counties in California from Data Commons using the R API Client and view it in a tibble. We will focus on how functions such as
 
-- `GetPropertyValues`
-- `GetPlacesIn`
-- `GetPopulations`
-- `GetObservations`
+- `get_property_values`
+- `get_places_in`
+- `get_populations`
+- `get_observations`
 
 operate when using a tibble, as well as how statistical observations are modeled within the Data Commons graph. To see a full list of functions from the Data Commons R API Client, you can use R's `ls` function:
 
@@ -110,27 +109,27 @@ data
 
 ### Accessing Properties of a Node
 
-For all properties, one can use **`GetPropertyValues`** to get the associated values. We would like to know that the `dcid` we have in our data frame belongs to California by getting the name of the node identified by "geoId/06".
+For all properties, one can use **`get_property_values`** to get the associated values. We would like to know that the `dcid` we have in our data frame belongs to California by getting the name of the node identified by "geoId/06".
 
 To see the documentation for any function, you can bring up the R doc in the Help panel using the built-in `help` function or its `?` shortcut:
 ```{r}
-?GetPropertyValues
+?get_property_values
 ```
 
-`GetPropertyValues` accepts the following parameters.
+`get_property_values` accepts the following parameters.
 
 - **`dcids`** - vector OR single-column tibble/data frame of string(s) of `dcid`(s) to get property values for.
 - **`prop`** - string identifying the property to get the property values for.
-- **`outgoing`** - optional boolean flag indicating whether the property is directed away from the given nodes. TRUE by default
-- **`valueType`** - optional string identifying the node type to filter the returned property values by. NULL by default.
-- **`limit`** - optional integer indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.
+- **`out`** - optional boolean flag indicating whether the property is directed away from the given nodes. TRUE by default
+- **`value_type`** - optional string identifying the node type to filter the returned property values by. NULL by default.
+- **`limit`** - optional integer (up to 500) indicating the maximum number of property values returned aggregated over all given nodes. 100 by default.
 
 When the `dcid`s are given as a column, the returned list of property values is a corresponding column where the i-th entry corresponds to property values associated with the i-th given `dcid`. Some properties, like [containedInPlace](https://browser.datacommons.org/kg?dcid=containedInPlace), may have many property values. Consequently, the cells of the returned series will always contain a list of property values. Let's take a look:
 
 ```{r}
-# Call GetPropertyValues. Because the return value will be a column, we can 
+# Call get_property_values. Because the return value will be a column, we can 
 # assign it directly to a new column in our frame.
-data$state_name = GetPropertyValues(select(data, state), 'name')
+data$state_name = get_property_values(select(data, state), 'name')
 
 # Display the frame
 data
@@ -145,24 +144,24 @@ data
 
 ### Working with Places in Data Commons
 
-We would now like to get all Counties contained in California. This can be achieved by calling `GetPropertyValues`, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, **`GetPlacesIn`**, to get places contained within a list of given places. `GetPlacesIn` accepts the following parameters.
+We would now like to get all Counties contained in California. This can be achieved by calling `get_property_values`, but because a large fraction of use cases will involve accessing geographical locations, the API also implements a function, **`get_places_in`**, to get places contained within a list of given places. `get_places_in` accepts the following parameters.
 
 - **`dcids`** - vector or a single-column tibble/data frame of `dcid`s to get contained in places.
 - **`placeType`** - string identifying type of places contained in the given `dcid`s to filter by.
 
-When `dcid`s is specified as a column, the return value is a column with the same format as that returned by `GetPropertyValues`. Let's call `GetPlacesIn` to get all counties within California.
+When `dcid`s is specified as a column, the return value is a column with the same format as that returned by `get_property_values`. Let's call `get_places_in` to get all counties within California.
 
 ```{r}
-# Call GetPlacesIn to get all counties in California. Here the type we use is 
+# Call get_places_in to get all counties in California. Here the type we use is 
 # "County". See https://browser.datacommons.org/kg?dcid=County for examples of 
 # other nodes in the graph with type "County".
-data$county = GetPlacesIn(select(data, state), 'County')
+data$county = get_places_in(select(data, state), 'County')
 
 # Display the frame
 data
 ```
 
-Notice that both `state_name` and `county` are columns with lists. `unnest` will automaticall flatten all columns that have lists in their cells.
+Notice that both `state_name` and `county` are columns with lists. `unnest` will automatically flatten all columns that have lists in their cells.
 
 ```{r}
 # Call flatten frame
@@ -176,7 +175,7 @@ Let's now get the names for the county column, as we did for the state column.
 
 ```{r}
 # Get the names of all counties in California.
-data$county_name = GetPropertyValues(select(data, county), 'name')
+data$county_name = get_property_values(select(data, county), 'name')
 data = unnest(data)
 
 # Display the frame
@@ -209,22 +208,22 @@ At the top of the browser page, we are presented a few properties of this node t
 
 There are two other properties defined: `numConstraints` and `employment`. These two properties help us describe entities contained in this statistical population. Properties used to describe the entities captured by a StatisticalPopulation are called *constraining properties*. In the example above, `employment=BLS_Employed` is a constraining property that tells us the Statistical Population captures employed persons. `numConstraints` denotes how many constraining properties there are, and in the example above, `numConstraints=1` tells us that `employment` is the only constraining property.
 
-To query for `StatisticalPopulation`s using the Data Commons R API Client, we call **`GetPopulations`**. The function accepts the following parameters.
+To query for `StatisticalPopulation`s using the Data Commons R API Client, we call **`get_populations`**. The function accepts the following parameters.
 
 - **`dcids`** - vector OR single-column tibble/dataframe of `dcid`(s) identifying `Place`s of `StatisticalPopulation`s to query for.
-- **`populationType`** - string identifying the population type of the `StatisticalPopulation`.
-- **`constraintsPVMap`** - optional named list mapping constraining property to the value that the `StatisticalPopulation` should be constrained by. Empty by default.
+- **`population_type`** - string identifying the population type of the `StatisticalPopulation`.
+- **`constraining_properties`** - optional named list mapping constraining property to the value that the `StatisticalPopulation` should be constrained by. Empty by default.
 
-When a column is provided to `dcids`, the return value is a column with each cell populated by a single `dcid` and not a list. This is because the combination of `dcids`, `populationType`, and optionally `constraintsPVMap` always map to a unique `StatisticalPopulation` `dcid` if it exists.
+When a column is provided to `dcids`, the return value is a column with each cell populated by a single `dcid` and not a list. This is because the combination of `dcids`, `population_type`, and optionally `constraining_properties` always map to a unique `StatisticalPopulation` `dcid` if it exists.
 
-Let's call `GetPopulations` to get the populations of all employed individuals living in counties specified by the `county` column of our tibble.
+Let's call `get_populations` to get the populations of all employed individuals living in counties specified by the `county` column of our tibble.
 
 ```{r}
-# First we create the constraintsPVMap
+# First we create the constraining_properties
 props <- list(employment = 'BLS_Employed')
 
 # We now call get_populations.
-data$employed_pop <- GetPopulations(select(data, county), 'Person', constraintsPVMap=props)
+data$employed_pop <- get_populations(select(data, county), 'Person', constraining_properties=props)
 
 # Display the DataFrame. Notice that we don't need to flatten the frame.
 print(head(data))
@@ -247,31 +246,31 @@ In this page, there are a few properties to consider:
 
 The final property of interest is **`measuredValue`**. This property tells us that the raw value observed by the observation (whose value is 1,015,129) in this case. The `measuredValue` is also a *statistic type* associated with the observation. For a single observation, there could be many statistics that describe it. One would be the raw value represented by `measuredValue`, while others include `meanValue`, `medianValue`, `marginOfError`, and more.
 
-These parameters are useful for deciding what values to provide to the API. To query for `Observation`s using the R API Client, we call **`GetObservations`** which accepts the following parameters.
+These parameters are useful for deciding what values to provide to the API. To query for `Observation`s using the R API Client, we call **`get_observations`** which accepts the following parameters.
 
 - **`dcids`** - vector OR single column tibble/data frame of `dcid`s to get observations for.
-- **`measuredProperty`** - string identifying the measured property.
-- **`statsType`** - string identifying the statistical type for the observation.
-- **`observationDate`** - string of the associated observation date in ISO8601 format.
-- **`observationPeriod`** - string specifying the observation period. Required if the Observations you are querying for specify this field. NULL by default.
-- **`measurementMethod`** - string specifying the measurement method. Required if the Observations you are querying for specify this field. NULL by default.
+- **`measured_property`** - string identifying the measured property.
+- **`stats_type`** - string identifying the statistical type for the observation.
+- **`observation_date`** - string of the associated observation date in ISO8601 format.
+- **`observation_period`** - string specifying the observation period. Required if the Observations you are querying for specify this field. NULL by default.
+- **`measurement_method`** - string specifying the measurement method. Required if the Observations you are querying for specify this field. NULL by default.
 
-One thing to note is that not all `Observation`s will have a property value for `observationPeriod` and `measurementMethod`. For example, [the number of housing units with 3 bedrooms in Michigan](https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&db=) does not have `observationPeriod` while [number of Other Textile Mills](https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&db=) does not have `measurementMethod`. These parameters are thus optional arguments to the `GetObservations` API function.
+One thing to note is that not all `Observation`s will have a property value for `observationPeriod` and `measurementMethod`. For example, [the number of housing units with 3 bedrooms in Michigan](https://browser.datacommons.org/kg?dcid=dc/o/6x1emqkzvvjq2&db=) does not have `observationPeriod` while [number of Other Textile Mills](https://browser.datacommons.org/kg?dcid=dc/o/mc6yc1v1004y5&db=) does not have `measurementMethod`. These parameters are thus optional arguments to the `get_observations` API function.
 
 When a column is provided to `dcids`, the return value is again a column with each cell populated by the statistic and not a list of statistics. The combination of the above parameters always map to a unique observation if it exists. If the statistic does not exist for the given parameters, then the cell will contain `NaN`.
 
 Let's get the `measuredValue` of observations of the column of populations we just queried for.
 
 ```{r}
-# Call GetObservations We are passing into the parameters the values that we
+# Call get_observations We are passing into the parameters the values that we
 # saw in the link above.
-data$employed_count <- GetObservations(
+data$employed_count <- get_observations(
     select(data, employed_pop), 
     'count', 
     'measuredValue', 
     '2018-01', 
-    observationPeriod='P1M',
-    measurementMethod='BLSSeasonallyUnadjusted')
+    observation_period='P1M',
+    measurement_method='BLSSeasonallyUnadjusted')
 
 # Display the DataFrame
 print(head(data))
@@ -289,12 +288,6 @@ final_data <- final_data[order(final_data$employed_count, decreasing = TRUE),]
 # make county_name an ordered factor so ggplot2 doesn't try to sort it...
 final_data$county_name <- factor(final_data$county_name, levels = final_data$county_name)
 
-# Plot the bar chart
-# final_data.plot.bar(x='county_name', y='employed_count', rot=90, figsize=(12, 8))
-# plt.show()
-
-# barplot(final_data$employed_count, names.arg = final_data$county_name)
-
 theme_set(theme_light(base_size = 12))
 options(scipen=999)
 g <- ggplot(final_data, aes(x=county_name, y=employed_count)) +
@@ -309,22 +302,22 @@ This wraps up our tutorial on how to use the Data Commons R API Client to access
 
 - How statistics are modeled in the graph
 - What Node API methods are available for accessing these statistics
-  - `GetPropertyValues`
-  - `GetPlacesIn`
-  - `GetPopulations`
-  - `GetObservations`
+  - `get_property_values`
+  - `get_places_in`
+  - `get_populations`
+  - `get_observations`
 - How to use API methods to access these statistics
 
 We did not cover 2 Node API methods:
 
-- GetTriples: get all triples (subject-predicate-object) where the specified node is
+- get_triples: get all triples (subject-predicate-object) where the specified node is
   either a subject or an object.
   
-- GetPropertyLabels: get property labels of each specified node.
+- get_property_labels: get property labels of each specified node.
 
 Remember that you can learn more about these functions, or any function, using the R `help(function)` command or the `?function` shortcut. To see a list of all functions in a package, use the R `ls(pos = "package:datacommons")` command.
 
-Lastly, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as
+Lastly, one may wish to perform a more nuanced analysis of employment. For example, to really understand employment rates in a given county, we may wish to normalize the counts we queried for by the counts of various populations such as:
 
 - All persons in a county.
 - All persons of working age in a county.
