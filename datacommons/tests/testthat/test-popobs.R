@@ -66,7 +66,7 @@ test_that("get_populations fails with fake API key", {
 
   stateDcids <- c('geoId/06', 'geoId/21', 'geoId/24')
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("fakekey")
   expect_error(get_populations(stateDcids, 'Person', list(gender = 'Female')),
                ".*Response error: An HTTP 400 code.*")
@@ -128,7 +128,7 @@ test_that("get_observations fails with fake API key", {
 
   femalePops <- get_populations('geoId/06085', 'Person', list(gender = 'Female'))
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("pseudokey")
   expect_error(get_observations(unlist(femalePops), 'count', 'measured_value',
                                '2016', measurement_method = 'CenusACS5yrSurvey'),

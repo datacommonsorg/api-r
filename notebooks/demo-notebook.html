@@ -405,9 +405,9 @@ summary {
 <p><strong>Using the Data Commons API requires you to provision an API key on GCP, and enable Data Commons on your GCP project:</strong></p>
 <ol style="list-style-type: decimal">
 <li><p>Follow the instructions <a href="http://docs.datacommons.org/api/setup.html">on this page</a> to create your API key and enable the Data Commons API for your GCP project.</p></li>
-<li><p>Replace <code>Sys.getenv(&quot;API_KEY&quot;)</code> with your API key, such as “123456”. Then run the following block.</p></li>
+<li><p>Replace <code>Sys.getenv(&quot;DC_API_KEY&quot;)</code> with your API key, such as “123456”. Then run the following block.</p></li>
 </ol>
-<pre class="r"><code>REPLACE_WITH_YOUR_API_KEY = Sys.getenv(&quot;API_KEY&quot;)
+<pre class="r"><code>REPLACE_WITH_YOUR_API_KEY = Sys.getenv(&quot;DC_API_KEY&quot;)
 
 set_api_key(REPLACE_WITH_YOUR_API_KEY)</code></pre>
 <div id="what-is-data-commons" class="section level2">

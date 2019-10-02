@@ -55,8 +55,8 @@ test_that("query returns large dataframe", {
 })
 
 test_that("query fails when API key is wiped", {
-  keyCopy = Sys.getenv("API_KEY")
-  Sys.unsetenv("API_KEY")
+  keyCopy = Sys.getenv("DC_API_KEY")
+  Sys.unsetenv("DC_API_KEY")
   califQuery1 <- "SELECT  ?name
     WHERE {
      ?a typeOf Place .
@@ -66,12 +66,12 @@ test_that("query fails when API key is wiped", {
     "
   expect_error(query(califQuery1)[[1]],
                ".*Response error: An HTTP 401 code.*")
-  Sys.setenv("API_KEY" = keyCopy)
+  Sys.setenv("DC_API_KEY" = keyCopy)
 })
 
 test_that("query fails when API key is invalid", {
-  keyCopy = Sys.getenv("API_KEY")
-  Sys.setenv(API_KEY = "fakekey")
+  keyCopy = Sys.getenv("DC_API_KEY")
+  Sys.setenv(DC_API_KEY = "fakekey")
   califQuery1 <- "SELECT  ?name
     WHERE {
      ?a typeOf Place .
@@ -81,5 +81,5 @@ test_that("query fails when API key is invalid", {
     "
   expect_error(query(califQuery1)[[1]],
                ".*Response error: An HTTP 400 code.*")
-  Sys.setenv("API_KEY" = keyCopy)
+  Sys.setenv("DC_API_KEY" = keyCopy)
 })

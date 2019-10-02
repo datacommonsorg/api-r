@@ -18,7 +18,7 @@ test_that("setting and unsetting API keys work correctly", {
 
   expect_gt(length(get_property_labels("Class")[[1]]), 3)
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("1234567")
   expect_error(get_property_labels("Class"))
 

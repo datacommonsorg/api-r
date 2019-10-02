@@ -31,7 +31,7 @@ set_api_key = function(key) {
   dc$set_api_key(key)
   # Set API key in R environment for query func
   # Temporary, once we re-wite R to use Python's query func, no longer needed
-  Sys.setenv(API_KEY = key)
+  Sys.setenv(DC_API_KEY = key)
 }
 
 # Helper function to ensure that R dcids input will be converted to

@@ -44,7 +44,7 @@ test_that("get_property_labels returns incoming and outgoing labels", {
 test_that("get_property_labels fails with invalid API key", {
   skip_if_no_dcpy()
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("invalidkey")
   expect_error(get_property_labels(list('geoId/06085'), out = FALSE),
                ".*Response error: An HTTP 400 code.*")
@@ -90,7 +90,7 @@ test_that("get_property_values returns incoming and outgoing edges", {
 test_that("get_property_values fails with fake API key", {
   skip_if_no_dcpy()
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("fakekey")
   expect_error(get_property_values(list('geoId/06085'), 'landArea'),
                ".*Response error: An HTTP 400 code.*")
@@ -123,7 +123,7 @@ test_that("get_triples returns triples involving given dcid(s)", {
 test_that("get_triples fails with invalid API key", {
   skip_if_no_dcpy()
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("invalidkey")
   expect_error(get_triples(list('geoId/06085'), limit=100),
                ".*Response error: An HTTP 400 code*")
