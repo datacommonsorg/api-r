@@ -14,7 +14,7 @@
 
 # Data Commons Node API - Places Convenience Function
 #
-# GetPlacesIn
+# get_places_in
 #
 # These functions provide R access to
 #   Data Commons Node API Places convenience functions.
@@ -35,31 +35,31 @@
 #'   This parameter will accept a vector of strings
 #'   or a single-column tibble/data frame of strings.
 #'   To select a single column, use \code{select(df, col)}.
-#' @param placeType required, string identifying the place type to filter results
+#' @param place_type required, string identifying the place type to filter results
 #'   by.
 #' @return If dcids input is vector of strings, will return a named
-#'   list mapping each dcid to places contained in it of the given placeType.
+#'   list mapping each dcid to places contained in it of the given place_type.
 #'
 #'   If \code{dcids} input is tibble/data frame, will return a new
 #'   single-column tibble/data frame where the i-th entry of the output
 #'   corresponds to places contained in the place identified by the dcid in
 #'   i-th cell of the \code{dcids} input. The cells of output column will
-#'   always contain a vector of place dcids of the given placeType.
+#'   always contain a vector of place dcids of the given place_type.
 #' @export
 #' @examples
 #' # Atomic vector of the dcids of Santa Clara and Montgomery County.
 #' countyDcids <- c('geoId/06085', 'geoId/24031')
 #' # Get towns in Santa Clara and Montgomery County.
-#' towns <- GetPlacesIn(countyDcids, 'Town')
+#' towns <- get_places_in(countyDcids, 'Town')
 #'
 #' # Tibble of the dcids of Santa Clara and Montgomery County.
 #' df <- tibble(countyDcid = c('geoId/06085', 'geoId/24031'))
 #' # Get towns in Santa Clara and Montgomery County.
-#' df$townDcid <- GetPlacesIn(df, 'Town')
-#' # Since GetPlacesIn returned a mapping between counties and
+#' df$townDcid <- get_places_in(df, 'Town')
+#' # Since get_places_in returned a mapping between counties and
 #' # a list of towns, use you can use tidyr::unnest to create
 #' # a 1-1 mapping between each county and its towns.
-GetPlacesIn <- function(dcids, placeType) {
-  dcids = ConvertibleToPython(dcids)
-  return(CallPython(dc$get_places_in, list(dcids, placeType)))
+get_places_in <- function(dcids, place_type) {
+  dcids = convertible_to_python(dcids)
+  return(call_python(dc$get_places_in, list(dcids, place_type)))
 }

@@ -15,7 +15,7 @@
 
 # Data Commons Query API
 #
-# Query
+# query
 #
 # This function provides R access to
 #   Data Commons Query API function.
@@ -27,11 +27,11 @@
 #' the Data Commons Open Knowledge Graph via SPARQL queries to
 #' the Data Commons Query API.
 #'
-#' @param queryString required, SPARQL query string.
+#' @param query_string required, SPARQL query string.
 #' @return A populated data frame with columns specified by the SPARQL query.
 #' @export
 #' @examples
-#' queryString = "SELECT ?pop ?Unemployment
+#' query_string = "SELECT ?pop ?Unemployment
 #'     WHERE {
 #'       ?pop typeOf StatisticalPopulation .
 #'       ?o typeOf Observation .
@@ -39,10 +39,10 @@
 #'       ?o observedNode ?pop .
 #'       ?o measuredValue ?Unemployment
 #'     }"
-#' df = Query(queryString)
-Query <- function(queryString) {
+#' df = query(query_string)
+query <- function(query_string) {
   # Encode the query to REST URL
-  urlEncodedQuery <- URLencode(queryString, reserved = TRUE)
+  urlEncodedQuery <- URLencode(query_string, reserved = TRUE)
   reqUrl <- paste0("http://api.datacommons.org/query?sparql=",
                    URLencode(urlEncodedQuery), "&key=", Sys.getenv("API_KEY"))
   resp <- GET(reqUrl)
@@ -55,11 +55,11 @@ Query <- function(queryString) {
                                    simplifyVector = FALSE)
   if (http_error(resp)) {
     if (status_code(resp) == 401) {
-      parsedResp$message <- "API key not set. See the SetApiKey help docs for
+      parsedResp$message <- "API key not set. See the set_api_key help docs for
         instructions on obtaining and setting an API key, then try again."
     }
     if (status_code(resp) == 400) {
-      parsedResp$message <- "API key not valid. Please pass a valid API key. See the SetApiKey
+      parsedResp$message <- "API key not valid. Please pass a valid API key. See the set_api_key
         help docs for instructions on obtaining and setting an API key, then try again."
     }
     stop(

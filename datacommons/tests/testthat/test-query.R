@@ -30,8 +30,8 @@ test_that("query returns California data", {
     }
     "
 
-  expect_identical(Query(califQuery1)[[1]], "California")
-  expect_identical(Query(califQuery2)[[1]], "California")
+  expect_identical(query(califQuery1)[[1]], "California")
+  expect_identical(query(califQuery2)[[1]], "California")
 })
 
 test_that("query returns large dataframe", {
@@ -43,7 +43,7 @@ test_that("query returns large dataframe", {
       ?o observedNode ?pop .
       ?o measuredValue ?Unemployment
     }"
-  df = Query(unemploymentQuery)
+  df = query(unemploymentQuery)
 
   expect_gt(dim(df)[1], 400)
   expect_equal(dim(df)[2], 2)
@@ -54,7 +54,7 @@ test_that("query returns large dataframe", {
   expect_true(4.7 %in% df$`?Unemployment`)
 })
 
-test_that("Query fails when API key is wiped", {
+test_that("query fails when API key is wiped", {
   keyCopy = Sys.getenv("API_KEY")
   Sys.unsetenv("API_KEY")
   califQuery1 <- "SELECT  ?name
@@ -64,12 +64,12 @@ test_that("Query fails when API key is wiped", {
      ?a dcid \"geoId/06\"
     }
     "
-  expect_error(Query(califQuery1)[[1]],
+  expect_error(query(califQuery1)[[1]],
                ".*Response error: An HTTP 401 code.*")
   Sys.setenv("API_KEY" = keyCopy)
 })
 
-test_that("Query fails when API key is invalid", {
+test_that("query fails when API key is invalid", {
   keyCopy = Sys.getenv("API_KEY")
   Sys.setenv(API_KEY = "fakekey")
   califQuery1 <- "SELECT  ?name
@@ -79,7 +79,7 @@ test_that("Query fails when API key is invalid", {
      ?a dcid \"geoId/06\"
     }
     "
-  expect_error(Query(califQuery1)[[1]],
+  expect_error(query(califQuery1)[[1]],
                ".*Response error: An HTTP 400 code.*")
   Sys.setenv("API_KEY" = keyCopy)
 })

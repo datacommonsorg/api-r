@@ -27,7 +27,7 @@
 #'
 #' @param dcids required, vector of string(s) of dcid(s) to get
 #'   property labels for.
-#' @param outgoing optional, boolean flag indicating whether to get properties
+#' @param out optional, boolean flag indicating whether to get properties
 #'   that point away from the given node(s). TRUE by default.
 #' @return Named list mapping dcids to lists of property labels via the
 #'   given direction.
@@ -36,19 +36,19 @@
 #' # dcid string of Santa Clara County.
 #' sccDcid <- 'geoId/06085'
 #' # Get incoming and outgoing properties for Santa Clara County.
-#' inLabels <- GetPropertyLabels(sccDcid, outgoing = FALSE)
-#' outLabels <- GetPropertyLabels(sccDcid)
+#' inLabels <- get_property_labels(sccDcid, out = FALSE)
+#' outLabels <- get_property_labels(sccDcid)
 #'
 #' # List of dcid strings of Florida, Planned Parenthood West, and the
 #' # Republican Party.
 #' dcids <- c('geoId/12', 'plannedParenthood-PlannedParenthoodWest',
 #'            'politicalParty/RepublicanParty')
 #' # Get incoming and outgoing properties for Santa Clara County.
-#' inLabels <- GetPropertyLabels(dcids, outgoing = FALSE)
-#' outLabels <- GetPropertyLabels(dcids)
-GetPropertyLabels <- function(dcids, outgoing = TRUE) {
-  dcids = ConvertibleToPython(dcids)
-  return(CallPython(dc$get_property_labels, list(dcids, outgoing)))
+#' inLabels <- get_property_labels(dcids, out = FALSE)
+#' outLabels <- get_property_labels(dcids)
+get_property_labels <- function(dcids, out = TRUE) {
+  dcids = convertible_to_python(dcids)
+  return(call_python(dc$get_property_labels, list(dcids, out)))
 }
 
 #' Return property values along a property for one or more nodes
@@ -61,12 +61,12 @@ GetPropertyLabels <- function(dcids, outgoing = TRUE) {
 #'   string(s) of dcid(s) to get property values for.
 #' @param prop required, string identifying the property to get the property
 #'   values for.
-#' @param outgoing optional, boolean flag indicating whether the property
+#' @param out optional, boolean flag indicating whether the property
 #'   is directed away from the given nodes. TRUE by default.
-#' @param valueType optional, string identifying the node type to filter the
+#' @param value_type optional, string identifying the node type to filter the
 #'    returned property values by. NULL by default.
-#' @param limit optional, integer indicating the maximum number of property
-#'   values returned aggregated over all given nodes. 100 by default.
+#' @param limit optional, integer  (up to 500) indicating the maximum number of
+#'   property values returned aggregated over all given nodes. 100 by default.
 #' @return
 #' If dcids input is vector of strings, will return a named list mapping each
 #' dcid to its property values via the given property and direction.
@@ -81,23 +81,23 @@ GetPropertyLabels <- function(dcids, outgoing = TRUE) {
 #' # Set the dcid to be that of Santa Clara County.
 #' sccDcid <- 'geoId/06085'
 #' # Get the landArea value of Santa Clara (a leaf node).
-#' landArea <- GetPropertyValues(sccDcid, 'landArea')
+#' landArea <- get_property_values(sccDcid, 'landArea')
 #'
 #' # Create a vector with Santa Clara and Miami-Dade County dcids
 #' countyDcids <- c('geoId/06085', 'geoId/12086')
 #' # Get all containing Cities.
-#' cities <- GetPropertyValues(countyDcids, 'containedInPlace',
-#'                             outgoing = FALSE, valueType = 'City')
+#' cities <- get_property_values(countyDcids, 'containedInPlace',
+#'                             out = FALSE, value_type = 'City')
 #'
 #'# Create a data frame with Santa Clara and Miami-Dade County dcids
 #' df <- data.frame(countyDcid = c('geoId/06085', 'geoId/12086'))
 #' # Get all containing Cities.
-#' df$cityDcid <- GetPropertyValues(select(df, countyDcid), 'containedInPlace',
-#'                                  outgoing = FALSE, valueType = 'City')
-GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
-                              limit = 100) {
-  dcids = ConvertibleToPython(dcids)
-  return(CallPython(dc$get_property_values, list(dcids, prop, outgoing, valueType, limit)))
+#' df$cityDcid <- get_property_values(select(df, countyDcid), 'containedInPlace',
+#'                                  out = FALSE, value_type = 'City')
+get_property_values <- function(dcids, prop, out = TRUE, value_type = NULL,
+                              limit = MAX_LIMIT) {
+  dcids = convertible_to_python(dcids)
+  return(call_python(dc$get_property_values, list(dcids, prop, out, value_type, limit)))
 }
 
 #' Return all triples involving specified nodes
@@ -108,8 +108,8 @@ GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
 #' of a directed edge from s to o (sometimes also called the predicate).
 #'
 #' @param dcids required, vector of string(s) of dcids to get triples for.
-#' @param limit optional, integer indicating the max number of triples to
-#'   return PER predicate, direction, and neighbor type. 100 by default.
+#' @param limit optional, integer (up to 500) indicating the max number of
+#'   triples to return PER predicate, direction, and neighbor type. 100 by default.
 #' @return Named list mapping dcids to a list of triples (s, p, o) where s, p,
 #' and o are strings and either the subject or object is the mapped dcid.
 #' @export
@@ -117,15 +117,15 @@ GetPropertyValues <- function(dcids, prop, outgoing = TRUE, valueType = NULL,
 #' # Set the dcid to be that of Santa Clara County.
 #' sccDcid <- 'geoId/06085'
 #' # Get triples.
-#' triples <- GetTriples(sccDcid)
+#' triples <- get_triples(sccDcid)
 #'
 #' # List of dcid strings of Florida, Planned Parenthood West, and the
 #' # Republican Party.
 #' dcids <- c('geoId/12', 'plannedParenthood-PlannedParenthoodWest',
 #'            'politicalParty/RepublicanParty')
 #' # Get triples.
-#' triples <- GetPropertyLabels(dcids)
-GetTriples <- function(dcids, limit = 100) {
-  dcids = ConvertibleToPython(dcids)
-  return(CallPython(dc$get_triples, list(dcids, limit)))
+#' triples <- get_property_labels(dcids)
+get_triples <- function(dcids, limit = MAX_LIMIT) {
+  dcids = convertible_to_python(dcids)
+  return(call_python(dc$get_triples, list(dcids, limit)))
 }

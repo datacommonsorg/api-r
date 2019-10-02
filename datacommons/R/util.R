@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Set the default limit value
+MAX_LIMIT = 100
+
 #' Set your API Key
 #'
 #' Using the Data Commons API requires you to provision an API key on
@@ -22,19 +25,19 @@
 #' @export
 #' @examples
 #' # Say you got an API Key: 12345678, in the R console:
-#' SetApiKey("12345678")
-SetApiKey = function(key) {
+#' set_api_key("12345678")
+set_api_key = function(key) {
   # Set API key for Python dependency
   dc$set_api_key(key)
-  # Set API key in R environment for Query func
-  # Temporary, until Python client implements Query func
+  # Set API key in R environment for query func
+  # Temporary, once we re-wite R to use Python's query func, no longer needed
   Sys.setenv(API_KEY = key)
 }
 
 # Helper function to ensure that R dcids input will be converted to
 # list or series for python dcids input
 # https://rstudio.github.io/reticulate/articles/calling_python.html#type-conversions
-ConvertibleToPython = function(input) {
+convertible_to_python = function(input) {
   if (is.null(input) || length(input) < 1) {
     stop("input cannot be empty")
   }
@@ -74,7 +77,7 @@ ConvertibleToPython = function(input) {
 }
 
 # Helper function to call Python and convert error messages
-CallPython <- function(func, args) {
+call_python <- function(func, args) {
   tryCatch(
     expr = {
       return(do.call(func, args))
@@ -85,13 +88,13 @@ CallPython <- function(func, args) {
                      'HTTP 401')) {
         # Rewrite the error message to refer to R wrapper funtion
         err$message <- "Response error: An HTTP 401 code: API key not set.
-          See the SetApiKey help docs for instructions on obtaining and setting
+          See the set_api_key help docs for instructions on obtaining and setting
           an API key, then try again."
       } else if (str_detect(conditionMessage(err),
                             'HTTP 400')) {
         # Rewrite the error message to refer to R wrapper funtion
         err$message <- "Response error: An HTTP 400 code: API key not valid.
-          Please pass a valid API key. See the SetApiKey help docs for
+          Please pass a valid API key. See the set_api_key help docs for
           instructions on obtaining and setting an API key, then try again."
       }
       stop(err, call. = FALSE)
