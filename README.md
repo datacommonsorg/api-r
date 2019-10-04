@@ -52,8 +52,8 @@ WiFi is needed for all functions in this package. For more detail on usage of an
 
 ### Getting an API Key
 
-Using the Data Commons API requires you to provision an API key on GCP, then
-enable Data Commons API for your GCP project. Follow the steps
+Using the Data Commons API requires you to provision an API key on GCP, in
+addition to enabling Data Commons API for your GCP project. Follow the steps
 [here](http://docs.datacommons.org/api/setup.html).
 
 ### Installing
