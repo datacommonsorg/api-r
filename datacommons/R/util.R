@@ -18,20 +18,20 @@ MAX_LIMIT = 100
 #' Set your API Key
 #'
 #' Using the Data Commons API requires you to provision an API key on
-#' GCP. See
-#' \url{https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key}
+#' GCP and enabling th Data Commons API. See
+#' \url{http://docs.datacommons.org/api/setup.html}
 #'
-#' @param key (string) your API Key.
+#' @param api_key (string) your API Key.
 #' @export
 #' @examples
 #' # Say you got an API Key: 12345678, in the R console:
 #' set_api_key("12345678")
-set_api_key = function(key) {
+set_api_key = function(api_key) {
   # Set API key for Python dependency
-  dc$set_api_key(key)
+  dc$set_api_key(api_key)
   # Set API key in R environment for query func
   # Temporary, once we re-wite R to use Python's query func, no longer needed
-  Sys.setenv(DC_API_KEY = key)
+  Sys.setenv(DC_API_KEY = api_key)
 }
 
 # Helper function to ensure that R dcids input will be converted to
@@ -84,8 +84,9 @@ call_python <- function(func, args) {
     },
     error = function(err) {
       message(paste("Error calling Python function: ", func))
+      # Temporary fix, appears Python Client as obfuscated the HTTP code.
       if (str_detect(conditionMessage(err),
-                     'HTTP 401')) {
+                     'Must set an API key before using the API')) {
         # Rewrite the error message to refer to R wrapper funtion
         err$message <- "Response error: An HTTP 401 code: API key not set.
           See the set_api_key help docs for instructions on obtaining and setting
