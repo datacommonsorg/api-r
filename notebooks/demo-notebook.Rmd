@@ -48,10 +48,10 @@ library(datacommons, quiet=TRUE)
 
 1. Follow the instructions [on this page](http://docs.datacommons.org/api/setup.html) to create your API key and enable the Data Commons API for your GCP project.
 
-1. Replace `Sys.getenv("API_KEY")` with your API key, such as "123456". Then run the following block.
+1. Replace `Sys.getenv("DC_API_KEY")` with your API key, such as "123456". Then run the following block.
 
 ```{r}
-REPLACE_WITH_YOUR_API_KEY = Sys.getenv("API_KEY")
+REPLACE_WITH_YOUR_API_KEY = Sys.getenv("DC_API_KEY")
 
 set_api_key(REPLACE_WITH_YOUR_API_KEY)
 ```

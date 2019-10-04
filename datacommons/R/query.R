@@ -44,7 +44,7 @@ query <- function(query_string) {
   # Encode the query to REST URL
   urlEncodedQuery <- URLencode(query_string, reserved = TRUE)
   reqUrl <- paste0("http://api.datacommons.org/query?sparql=",
-                   URLencode(urlEncodedQuery), "&key=", Sys.getenv("API_KEY"))
+                   URLencode(urlEncodedQuery), "&key=", Sys.getenv("DC_API_KEY"))
   resp <- GET(reqUrl)
   if (http_type(resp) != "application/json") {
     stop("API did not return json", call. = FALSE)

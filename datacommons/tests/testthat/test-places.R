@@ -35,7 +35,7 @@ test_that("get_places_in gets correct containment data", {
 test_that("get_places_in fails with invalid API key", {
   skip_if_no_dcpy()
 
-  tmp <- Sys.getenv("API_KEY")
+  tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("fooo")
   expect_error(get_places_in(c('geoId/06085', 'geoId/24031'), 'Town'),
                ".*Response error: An HTTP 400 code.*")

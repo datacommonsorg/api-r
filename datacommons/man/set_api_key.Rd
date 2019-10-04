@@ -4,15 +4,15 @@
 \alias{set_api_key}
 \title{Set your API Key}
 \usage{
-set_api_key(key)
+set_api_key(api_key)
 }
 \arguments{
-\item{key}{(string) your API Key.}
+\item{api_key}{(string) your API Key.}
 }
 \description{
 Using the Data Commons API requires you to provision an API key on
-GCP. See
-\url{https://datacommons.readthedocs.io/en/latest/started.html#creating-an-api-key}
+GCP and enabling th Data Commons API. See
+\url{http://docs.datacommons.org/api/setup.html}
 }
 \examples{
 # Say you got an API Key: 12345678, in the R console:
