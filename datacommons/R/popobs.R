@@ -132,7 +132,7 @@ get_populations <- function(dcids, population_type, constraining_properties = NU
 #' # \code{unlist} converts lists to vectors
 #' femaleCount <- get_observations(unlist(femalePops), 'count',
 #'                                'measured_value', '2016',
-#'                                measurement_method = 'CenusACS5yrSurvey')
+#'                                measurement_method = 'CensusACS5yrSurvey')
 #'
 #' # Tibble/data frame version
 #' df <- tibble(countyDcid = stateDcids, rand = c(1, 2, 3))
@@ -140,7 +140,7 @@ get_populations <- function(dcids, population_type, constraining_properties = NU
 #'                               list(gender = 'Male'))
 #' df$maleCount <- get_observations(select(df, malePops), 'count',
 #'                                 'measured_value', '2016',
-#'                                 measurement_method = 'CenusACS5yrSurvey')
+#'                                 measurement_method = 'CensusACS5yrSurvey')
 get_observations <- function(dcids, measured_property, stats_type,
                             observation_date, observation_period = NULL,
                             measurement_method = NULL) {
