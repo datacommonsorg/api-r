@@ -94,9 +94,9 @@ test_that("get_observations gets data", {
   expect_match(malePops[[1]], "dc/p/.*")
 
   femaleCount <- get_observations(unlist(femalePops), 'count', 'measured_value',
-                                 '2016', measurement_method = 'CenusACS5yrSurvey')
+                                 '2016', measurement_method = 'CensusACS5yrSurvey')
   maleCount <- get_observations(unlist(malePops), 'count', 'measured_value',
-                               '2016', measurement_method = 'CenusACS5yrSurvey')
+                               '2016', measurement_method = 'CensusACS5yrSurvey')
 
   expect_gt(as.numeric(femaleCount), 500000)
   expect_gt(as.numeric(maleCount), 500000)
@@ -113,10 +113,10 @@ test_that("get_observations gets data", {
   # Get observations
   df$femaleCount <- get_observations(select(df,femalePops), 'count',
                                     'measured_value', '2016',
-                                    measurement_method = 'CenusACS5yrSurvey')
+                                    measurement_method = 'CensusACS5yrSurvey')
   df$maleCount <- get_observations(select(df,malePops), 'count',
                                   'measured_value', '2016',
-                                  measurement_method = 'CenusACS5yrSurvey')
+                                  measurement_method = 'CensusACS5yrSurvey')
 
   expect_gt(as.numeric(df$femaleCount[2]), 2000000)
   expect_gt(as.numeric(df$maleCount[2]), 2000000)
@@ -131,7 +131,7 @@ test_that("get_observations fails with fake API key", {
   tmp <- Sys.getenv("DC_API_KEY")
   set_api_key("pseudokey")
   expect_error(get_observations(unlist(femalePops), 'count', 'measured_value',
-                               '2016', measurement_method = 'CenusACS5yrSurvey'),
+                               '2016', measurement_method = 'CensusACS5yrSurvey'),
                ".*Response error: An HTTP 400 code.*")
   set_api_key(tmp)
 })
