@@ -23,6 +23,7 @@ dc <- NULL
   # setting delay_load delays loading the module until it is first used
   # thus, user can first set python version in R after loading in this
   # R API Client package
-  system("pip install --upgrade --user --quiet git+https://github.com/datacommonsorg/api-python.git@v1.0.1")
-  dc <<- reticulate::import("datacommons", delay_load = FALSE)
+  system("pip3 install --upgrade --user --quiet git+https://github.com/datacommonsorg/api-python.git@v1.0.1")
+  # Assign datacommons import without loading (allows you to set python first)
+  dc <<- reticulate::import("datacommons", delay_load = TRUE)
 }
