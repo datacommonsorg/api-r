@@ -213,13 +213,22 @@ R CMD BUILD datacommons
 
 ### Working with Reticulate
 
-In `zzz.R`, the Python Client dependency is installed via pip. On many systems,
-this would default to install the Python Client to Python2. You can use pip3 to
-install the Python Client in Python3. If you do so, in the R console:
+In `zzz.R`, the Python Client dependency is installed via pip3, but the package
+delays loading the python package until the library is first used, so if you'd
+like, you can set your Python version in the R console:
 ```
-# Reassign datacommons import without loading (allows you to set python first)
-dc <<- reticulate::import("datacommons", delay_load = TRUE)
+# Make sure reticulate is loaded
+library(reticulate)
 # Modify and run the next line:
 use_python("/usr/local/bin/python3.7")
 ```
+
+You can discover available Python versions using the R console:
+```
+# Make sure reticulate is loaded
+library(reticulate)
+# This command lists current Python and other versions found
+py_config()
+```
+
 Reticulate also supports the usage of virtual environments. Learn more at https://rstudio.github.io/reticulate/articles/versions.html
