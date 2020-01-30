@@ -3,7 +3,7 @@
 ## 1.1.0-beta
 **Date** - 1/30/2020
 **Release Tag** - [v1.1.0-beta](https://github.com/datacommonsorg/api-r/releases/tag/v1.1.0-beta)
-**Release Status** - Current head of branch [`1.1.0-beta`](https://github.com/datacommonsorg/api-r/tree/1.1.0-beta)
+**Release Status** - Current head of branch [`master`](https://github.com/datacommonsorg/api-r/tree/master)
 Updated function signatures to match Python client, updated data references, improved documentation.
 
 - All functions have been renamed from CamelCase to snake_case: `get_property_labels`, `get_property_values`, `get_triples`, `get_populations`, `get_observations`, `get_places_in`, `set_api_key`, `query`.
