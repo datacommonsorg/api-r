@@ -1,8 +1,8 @@
 Package: datacommons
 Title: Data Commons REST API R Client
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: person("Tiffany", "Jann", email = "tjann@google.com", role = c("aut", "cre"))
-Description: A RESTful R API Client for querying the DataCommons.org
+Description: (BETA) A RESTful R API Client for querying the DataCommons.org
     Open Knowledge Graph. The Node API endpoint is wrapped using Reticulate.
     The Query API endpoint is implemented in pure R.
     WiFi is needed for all functions in this package.

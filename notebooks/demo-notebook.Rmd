@@ -35,7 +35,7 @@ If you already [installed the client](https://github.com/datacommonsorg/api-r/bl
 ## SKIP THIS CHUNK IF YOU'VE ALREADY INSTALLED THIS CLIENT
 # if(!require(devtools)) install.packages("devtools")
 # library(devtools)
-# devtools::install_github("datacommonsorg/api-r@v1.0.0-beta", subdir="datacommons")
+# devtools::install_github("datacommonsorg/api-r@v1.1.0-beta", subdir="datacommons")
 ```
 
 Let's load the client.
