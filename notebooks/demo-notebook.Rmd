@@ -190,7 +190,7 @@ Statistical observations can be separated into two types of entities: the *stati
 
 > The number of employed individuals living in Santa Clara in January 2018 was 1,015,129
 
-can thus be represented by two entities: one capturing the population of *all persons who are unemployed* and another capturing the observation 1,015,129 made in January 2018. Data Commons represents these two entity types as `StatisticalPopulation` and `Observation`. Let's now focus on each separate one.
+can thus be represented by two entities: one capturing the population of *all persons who are employed* and another capturing the observation 1,015,129 made in January 2018. Data Commons represents these two entity types as `StatisticalPopulation` and `Observation`. Let's now focus on each separate one.
 
 #### StatisticalPopulations
 
